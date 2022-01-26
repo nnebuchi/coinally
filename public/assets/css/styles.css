@@ -1,0 +1,454 @@
+/* font settings */
+
+@font-face {
+    src: url(../fonts/Roboto/Roboto-Regular.ttf);
+    font-family: Roboto;
+}
+
+@font-face {
+    src: url(../fonts/Poppins/Poppins-Light.ttf);
+    font-family: Poppins-light;
+}
+
+@font-face {
+    src: url(../fonts/Roboto/Roboto-Bold.ttf);
+    font-family: Roboto-Bold;
+}
+
+@font-face {
+    src: url(../fonts/Poppins/Poppins-SemiBold.ttf);
+    font-family: Poppin-Semibold;
+}
+
+@font-face {
+    src: url(../fonts/Fredoka_One/FredokaOne-Regular.ttf);
+    font-family: FredokaOne;
+}
+
+.FredokaOne {
+    font-family: FredokaOne;
+}
+
+body {
+    font-family: Roboto;
+    /* background: #000!important; */
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.514), rgba(0, 0, 0, 0.404)), url(../images/background/rm378-09.jpg); */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.514), rgba(0, 0, 0, 0.404)), url(../images/background/bg-1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    background-position: center center;
+}
+
+.custom-brand {
+    font-family: Roboto-Bold;
+    color: #fff!important;
+}
+
+.Poppin-semibold {
+    font-family: Poppin-Semibold;
+}
+
+.custom-darkgrey {
+    background: #222222!important;
+}
+
+.nav-item .nav-link {
+    color: #fff!important;
+}
+
+.navbar-toggler {
+    box-shadow: none!important;
+    border-color: none!important;
+    outline: none!important;
+    border: none!important;
+}
+
+.custom-text-shadow {
+    text-shadow: 0px 2px 5px #000;
+}
+
+.promoted-heading {
+    color: #ce0078;
+    margin: 10px 0;
+}
+
+
+/* font settings end */
+
+
+/* Css custom work */
+
+.custom-btn-success {
+    /* background-image: linear-gradient(to bottom, #24d72f, #1ec626, #18b61c, #11a612, #089606)!important; */
+    background: #fff;
+    color: #000!important;
+    font-weight: 600;
+    border: 0!important;
+    /* border: #fff solid 1px!important; */
+    /* box-shadow: 0px 2px 4px hsla(0, 1%, 51%, 0.505); */
+}
+
+.custom-btn-success:hover {
+    background: #fff!important;
+    transition: all .5s ease-in-out;
+}
+
+.navbar-toggler span {
+    color: #fff!important;
+}
+
+.custom-toggler {
+    border-color: 0!important;
+}
+
+.search-section {
+    padding: 5rem 0;
+}
+
+.input-group-text.custom-input {
+    background: #0000!important;
+    border-color: #D383D7;
+    border-left: 0!important;
+}
+
+.btn-vetted {
+    background-image: linear-gradient(to bottom, #ce0078, #bd036f, #ac0666, #9b075d, #8b0854);
+    /* background: #ce0078; */
+    border: 0;
+    margin: 0 2px;
+}
+
+.btn-vetted:focus {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+.custom-margin {
+    margin: 0 auto;
+}
+
+.pink-dark {
+    background: #240316!important;
+}
+
+.dark-thead {
+    background: #000!important;
+}
+
+.pink-color {
+    background: #ce0078!important;
+}
+
+.tbody-small {
+    font-size: 12px;
+}
+
+.light-mute {
+    color: #b3bac2;
+}
+
+.modal.modal-bg {
+    background: #9b075d49!important;
+}
+
+.custom-modal-content {
+    background: #240316;
+}
+
+.custom-modal-title {
+    color: #fff!important;
+    margin: 0 auto;
+}
+
+.modal-body a {
+    margin: 10px 0;
+}
+
+.btn-close {
+    background: #810667!important;
+    color: #fff;
+}
+
+.btn-close:hover {
+    color: #fff;
+}
+
+.vetted.active {
+    background: #fca2d6!important;
+    color: #410728!important;
+    transition: all ease-in-out .3s;
+}
+
+.vetted.active:focus {
+    background: #fca2d6!important;
+}
+
+.input-group-text.custom-address1 {
+    background: #fff!important;
+}
+
+.form-control.custom-address {
+    border: 0!important;
+}
+
+.input-group-text.custom-address2 {
+    background: #fff!important;
+    border-right: 0!important;
+    border-left: 0!important;
+}
+
+.custom-form-control {
+    background: #000!important;
+    border-color: #D383D7!important;
+    border-right: 0!important;
+}
+
+.custom-form-control ::placeholder {
+    color: #D383D7!important;
+}
+
+.custom-input i {
+    font-size: 18px;
+    color: #D383D7;
+}
+
+.custom-table-dark {
+    background: #000!important;
+    border-radius: 20px;
+    font-family: Poppins-light;
+    font-size: 13px;
+}
+
+.custom-table-dark th {
+    color: rgb(167, 164, 164)!important;
+}
+
+.token {
+    font-size: 30px!important;
+    font-family: Roboto-Bold;
+}
+
+.custom-select {
+    color: #fff!important;
+    border-color: #D383D7!important;
+    background: #000 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px !important;
+}
+
+.custom-pad {
+    padding: 0 0 4rem 0;
+}
+
+.coinally-img img {
+    width: 80px;
+    margin: 0 auto;
+    margin-top: 25px;
+    display: block;
+}
+
+.coinally-text {
+    font-size: 30px;
+    color: #ce0078;
+}
+
+.custom-text {
+    color: #fff!important;
+}
+
+.small-text {
+    font-size: 16px;
+}
+
+.custom-token-search {
+    /* background: #88016b!important; */
+    background-image: linear-gradient(to bottom, #88016b, #79025f, #6a0354, #5c0349, #4e033e);
+    color: #fff!important;
+    border: 0!important;
+    box-shadow: 0px 2px 20px #ffffff5e;
+}
+
+.custom-token-form-control {
+    box-shadow: 0px 2px 20px #ffffff5e;
+}
+
+
+/* Breadcrumb */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* text-align: center; */
+}
+
+ul>li.custom-list {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 18px;
+    line-height: 1;
+    color: #789;
+}
+
+ul>li.custom-list:not(:last-child)::after {
+    content: ' /  ';
+    font-weight: 600;
+}
+
+ul>li.custom-list>a {
+    /* text-transform: uppercase; */
+    text-decoration: none;
+    color: #789;
+    font-size: 18px;
+    line-height: 1;
+}
+
+ul>li.custom-list>a:hover {
+    text-decoration: underline;
+}
+
+.coin-price {
+    color: #789;
+}
+
+.coin-fiat {
+    color: #fff!important;
+    font-size: 25px;
+}
+
+.coin-pump {
+    color: #00bb4e;
+}
+
+.coin-button a {
+    margin: 5px 0;
+}
+
+.facebook-brand {
+    background: #1877f2!important;
+    color: #fff!important;
+    border-color: #1877f2!important;
+}
+
+.twitter-brand {
+    background: #1da1f2!important;
+    color: #fff;
+    border-color: #1da1f2!important;
+}
+
+.custom-hr {
+    border-bottom: solid 1px #fff!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.custom-price-table {
+    font-size: 14px;
+    color: #8b98a5!important;
+}
+
+.container-custom {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.custom-grade-point {
+    background: #00bb4e;
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 2px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.small-text {
+    font-size: 14px;
+}
+
+.custom-footer {
+    /* background: #ce0078; */
+    background: #88016b;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+.custom-card {
+    border-radius: 10px;
+}
+
+.custom-navbar {
+    background: #88016b!important;
+}
+
+.dark-card {
+    background: rgb(19, 18, 18)!important;
+    border: solid 1px #88016b;
+    border-radius: 10px;
+}
+
+.custom-active.active {
+    background: rgb(71, 2, 60)!important;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+.custom-green {
+    color: rgb(8, 189, 8)!important;
+}
+
+.custom-red {
+    color: red;
+}
+
+.btn-default {
+    background: #fff!important;
+    font-family: Roboto-Bold;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0px 2px 15px #fca2d6;
+}
+
+.price-header {
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+    font-family: Roboto-Bold;
+}
+
+.price {
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+}
+
+
+/* Star checkbox start */
+
+.star {
+    visibility: hidden;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.star:before {
+    content: "\2605";
+    position: absolute;
+    visibility: visible;
+    color: #FFDF00;
+}
+
+.star:checked:before {
+    content: "\2606";
+    position: absolute;
+    color: #FFDF00;
+}
+
+
+/* Star checkbox end */

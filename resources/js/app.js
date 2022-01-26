@@ -13,3 +13,7 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+require('./components/Index');
+require('./components/layouts/Header');
+require('./components/layouts/Footer');
+require('./components/Tokens');
