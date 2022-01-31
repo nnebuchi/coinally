@@ -42,6 +42,29 @@ function Header() {
                 </div>
             </div>
         </div>
+
+        <div className="modal modal-bg fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content custom-modal-content">
+                        <div className="modal-header border-0">
+                            <h5 className="modal-title custom-modal-title" id="exampleModalLabel">Connect Your Wallet</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <a href="#" className="btn btn-default btn-block">Connect wallet</a>
+                            <a href="#" className="btn btn-default btn-block">Metamask/Trustwallet</a>
+                            <a href="#" className="btn btn-default btn-block">Binance Chain Wallet</a>
+
+
+                        </div>
+                        <div className="modal-footer border-0">
+                            <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </nav>
     );
 }

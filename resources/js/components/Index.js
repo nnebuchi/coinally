@@ -9,7 +9,8 @@ class Dutylist extends Component{
     constructor(){
         super()
         this.state = {
-            data: {}
+            networks: {},
+            tokens: {},
         }
        
         this.url = window.url
@@ -36,7 +37,7 @@ class Dutylist extends Component{
             .then((res) => res.json())
             .then((info) => {
                 this.setState({
-                    data: info
+                    networks: info
                 })
                 $('#inlineFormCustomSelect').empty().append('<option selected disabled>Network</option>')
                 
@@ -54,10 +55,37 @@ class Dutylist extends Component{
             })
             .catch(err => console.log(err))
     }
+
+    getTokensPrice(){
+        fetch(this.url+'/api/get-networks',
+            {
+                
+                headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0MzEwNTQ0MiwiaWF0IjoxNjQzMTA1NDQyfQ.HHjIscWL29AHwVpN-KRdHvp6DAC_wv1qL6zG2CDCX9ftHuTepe-dBfqKL0M31Sn_Wd6A8y3zNnVyAK195s4oXQ'
+                },
+                
+                method: 'get',
+                dataType: 'json',
+                
+            })
+            .then((res) => res.json())
+            .then((info) => {
+                this.setState({
+                    tokens: info
+                })
+                
+                console.log(this.state.tokens)
+            //  return data;
+            })
+            .catch(err => console.log(err))
+    }
     
 
     componentDidMount(){
        this.fixNetworks()
+       this.getTokensPrice()
         //this.fixTokens()
         
     }
@@ -72,40 +100,11 @@ class Dutylist extends Component{
 
         return (
             <div>
-            <div className="modal modal-bg fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content custom-modal-content">
-                        <div className="modal-header border-0">
-                            <h5 className="modal-title custom-modal-title" id="exampleModalLabel">Connect Your Wallet</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <a href="#" className="btn btn-default btn-block">Connect wallet</a>
-                            <a href="#" className="btn btn-default btn-block">Metamask/Trustwallet</a>
-                            <a href="#" className="btn btn-default btn-block">Binance Chain Wallet</a>
-
-
-                        </div>
-                        <div className="modal-footer border-0">
-                            <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
    
             <div className="container mt-5">
 
-                <div className="my-5">
-                    <div className="coinally-img">
-                        <img src="./assets/images/coinally.png" alt="" />
-                    </div>
-
-                    <div className="coinally-text text-center FredokaOne">
-                        Coinally
-                    </div>
-                </div>
+                <div id="central-logo"></div>
+               
                 <div className="container">
                     <div className="price-header">
                         BSC Charts
@@ -125,6 +124,7 @@ class Dutylist extends Component{
                             </div>
                         </div>
                     </div>
+                </form>
                     
                     <div className="row d-flex justify-content-center">
                         <div className="col-md-8">
@@ -384,22 +384,7 @@ class Dutylist extends Component{
                             </div>
                         </div>
                     </div>
-                    <div className="row d-flex mt-5 justify-content-center">
-                        <div className="col-md-7">
-                            <span className="input-container">
-                                <div className="input-group mb-3">
-                                    <input type="text" className="form-control custom-form-control" placeholder="Search Tokens" aria-label="Search" aria-describedby="basic-addon2" />
-                                    <div className="input-group-append">
-                                        
-                                        <button className="input-group-text custom-input" id="basic-addon2"><i className="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </span>
-                    
-                        </div>
-                    </div>
-                </form>
+                    <div id="wide-token-search"></div>
             </div>
 
 

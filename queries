@@ -47,3 +47,28 @@ search a sttring on entire blockchain
 }
 
 
+
+//top 1000 tokens in a chain
+
+{
+  ethereum(network: ethereum) {
+    transfers(options: {desc: "count", limit: 10000}) {
+      currency {
+        decimals
+        name
+        symbol
+        address
+        tokenType
+        tokenId
+      }
+      count
+      senders: count(uniq: senders)
+      receivers: count(uniq: receivers)
+      days: count(uniq: dates)
+      from_date: minimum(of: date)
+      till_date: maximum(of: date)
+      amount
+    }
+  }
+}
+

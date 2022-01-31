@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/get-networks', [APIController::class, 'getNetworks']);
-
-
 Route::get('/get-tokens', [APIController::class, 'getTokens']);
+
+Route::get('/get-token-price', [APIController::class, 'currentTokenPrice']);

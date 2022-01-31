@@ -21,7 +21,7 @@ Route::get('test', function () {
     return view('test');
 });
 
-Route::get('/query', [App\Http\Controllers\HomeController::class, 'query4'])->name('query');
+Route::get('/query', [HomeController::class, 'query6'])->name('query');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
