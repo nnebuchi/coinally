@@ -122,46 +122,51 @@ class BlockchainData
             return $response->json();
     }
 
-    public function dailyVolume(){
-        return date('c', time());
+    public function dailyVolume($token){
+        $chain = $token->chain->name;
+        $baseAddr = $token->base_address;
+        $quoteAddr = $token->quote_address;
+        $exchange = $token->exchange->name;
+       $now = time();
+       $endIso =  date('c', $now);
+       // dd($time);
+       $start = $now - 86400;
+       $startIso = date('c', $start);
+       // dd($start);
         $query = <<<GQL
             query {
-                ethereum(network: ethereum) {
-                    dexTrades(options: {limit: 100, asc: "timeInterval.day"}, 
-                      date: {since:"2022-01-22"}
-                      exchangeName: {is: "Uniswap"}, 
-                      baseCurrency: {is: "0xdac17f958d2ee523a2206206994597c13d831ec7"}, 
-                      quoteCurrency: {is: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"}) {
-                      
-                      
-                      timeInterval {
-                        day(count: 1)
-                      }
-                
-                    
-                      baseCurrency {
-                        symbol
-                        address
-                      }
-                      baseAmount
-                      quoteCurrency {
-                        symbol
-                        address
-                      }
-                      quoteAmount
-                      
-                      trades: count
-                      quotePrice
-                      
-                      maximum_price: quotePrice(calculate: maximum)
-                      minimum_price: quotePrice(calculate: minimum)
-                      
-                      open_price: minimum(of: block get: quote_price)
-                      close_price: maximum(of: block get: quote_price)
-                          tradeAmount(in: USDT)
-                    }
+              ethereum(network: $chain) {
+                dexTrades(
+                  options: {limit: 100, asc: "timeInterval.day"}
+                  date: {since: "$startIso", till: "$endIso"}
+                  exchangeName: {is: "$exchange"}
+                  baseCurrency: {is: "$baseAddr"}
+                  quoteCurrency: {is: "$quoteAddr"}
+                ) {
+                  timeInterval {
+                    day(count: 1)
                   }
+                  baseCurrency {
+                    symbol
+                    address
+                  }
+                  baseAmount
+                  quoteCurrency {
+                    symbol
+                    address
+                  }
+                  quoteAmount
+                  trades: count
+                  quotePrice
+                  maximum_price: quotePrice(calculate: maximum)
+                  minimum_price: quotePrice(calculate: minimum)
+                  open_price: minimum(of: block, get: quote_price)
+                  close_price: maximum(of: block, get: quote_price)
+                  tradeAmount(in: USDT)
+                }
+              }
             }
+
             GQL;
 
             $response = Http::withHeaders([
@@ -172,7 +177,7 @@ class BlockchainData
             ]);
 
 
-            dump($response->json());
+            return $response->json();
     }
 
 }

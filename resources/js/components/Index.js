@@ -56,39 +56,6 @@ class Dutylist extends Component{
             .catch(err => console.log(err))
     }
 
-    getTokensPrice(){
-        fetch(this.url+'/api/get-networks',
-            {
-                
-                headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0MzEwNTQ0MiwiaWF0IjoxNjQzMTA1NDQyfQ.HHjIscWL29AHwVpN-KRdHvp6DAC_wv1qL6zG2CDCX9ftHuTepe-dBfqKL0M31Sn_Wd6A8y3zNnVyAK195s4oXQ'
-                },
-                
-                method: 'get',
-                dataType: 'json',
-                
-            })
-            .then((res) => res.json())
-            .then((info) => {
-                this.setState({
-                    tokens: info
-                })
-                
-                console.log(this.state.tokens)
-            //  return data;
-            })
-            .catch(err => console.log(err))
-    }
-    
-
-    componentDidMount(){
-       this.fixNetworks()
-       this.getTokensPrice()
-        //this.fixTokens()
-        
-    }
 
     render(){
 

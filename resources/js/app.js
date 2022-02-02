@@ -17,5 +17,6 @@ require('./components/Index');
 require('./components/layouts/Header');
 require('./components/layouts/Footer');
 require('./components/Tokens');
+require('./components/Tokens');
 require('./components/CentralLogo');
 require('./components/WideSearchForm');

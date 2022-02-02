@@ -12,4 +12,8 @@ class Token extends Model
     public function chain(){
         return $this->belongsTo(Chain::class);
     }
+
+    public function exchange(){
+        return $this->belongsTo(Exchange::class);
+    }
 }

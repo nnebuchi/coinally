@@ -5338,6 +5338,8 @@ __webpack_require__(/*! ./components/layouts/Footer */ "./resources/js/component
 
 __webpack_require__(/*! ./components/Tokens */ "./resources/js/components/Tokens.js");
 
+__webpack_require__(/*! ./components/Tokens */ "./resources/js/components/Tokens.js");
+
 __webpack_require__(/*! ./components/CentralLogo */ "./resources/js/components/CentralLogo.js");
 
 __webpack_require__(/*! ./components/WideSearchForm */ "./resources/js/components/WideSearchForm.js");
@@ -5649,37 +5651,6 @@ var Dutylist = /*#__PURE__*/function (_Component) {
       })["catch"](function (err) {
         return console.log(err);
       });
-    }
-  }, {
-    key: "getTokensPrice",
-    value: function getTokensPrice() {
-      var _this3 = this;
-
-      fetch(this.url + '/api/get-networks', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0MzEwNTQ0MiwiaWF0IjoxNjQzMTA1NDQyfQ.HHjIscWL29AHwVpN-KRdHvp6DAC_wv1qL6zG2CDCX9ftHuTepe-dBfqKL0M31Sn_Wd6A8y3zNnVyAK195s4oXQ'
-        },
-        method: 'get',
-        dataType: 'json'
-      }).then(function (res) {
-        return res.json();
-      }).then(function (info) {
-        _this3.setState({
-          tokens: info
-        });
-
-        console.log(_this3.state.tokens); //  return data;
-      })["catch"](function (err) {
-        return console.log(err);
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.fixNetworks();
-      this.getTokensPrice(); //this.fixTokens()
     }
   }, {
     key: "render",
@@ -6430,11 +6401,14 @@ var Tokens = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, Tokens);
 
-    _this = _super.call(this); // this.state = {
-    //     data: {}
-    // }
-
-    _this.url = window.url; // this.apiCalls = new apiCalls();
+    _this = _super.call(this);
+    _this.state = {
+      data: {},
+      assetUrl: {},
+      tokenUrl: {}
+    };
+    _this.url = window.url; // this.assetUrl = window.assetUrl;
+    // this.apiCalls = new apiCalls();
 
     return _this;
   }
@@ -6459,12 +6433,13 @@ var Tokens = /*#__PURE__*/function (_Component) {
           data: info
         });
 
-        console.log(info);
         jquery__WEBPACK_IMPORTED_MODULE_2___default()('#token-list').empty(); // <option value="1">ETH Tokens</option>
 
         if (info.status == 'success') {
-          jquery__WEBPACK_IMPORTED_MODULE_2___default().each(info.networks, function (index, value) {
-            jquery__WEBPACK_IMPORTED_MODULE_2___default()('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="./assets/images/icons/binance-coin-logo.png" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="./assets/images/icons/missing-b1bd71fb52d8fdf89d0fb13c1b9407d5157e33b1b5daf7b13df0d65bae1f0657.png" className="pr-1" width="30" alt="" /> <a href="./shiba.html" className="text-decoration-none custom-text">SHIBA INU</a></td><td> ' + value.symbol + '</td><td>$0.00002870</td><td>$2,175,962,199</td><td>$2,259,017</td></tr>');
+          jquery__WEBPACK_IMPORTED_MODULE_2___default().each(info.tokens, function (index, value) {
+            var tokenUrl = window.assetUrl + '/token_icons/' + value.logo;
+            var chainUrl = window.assetUrl + '/chain_icons/' + value.chain.icon;
+            jquery__WEBPACK_IMPORTED_MODULE_2___default()('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="' + chainUrl + '" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="' + tokenUrl + '" className="pr-1" width="30" alt="" /> <a href="./shiba.html" className="text-decoration-none custom-text">' + value.symbol + '</a></td><td> ' + value.symbol + '</td><td>$' + value.price + '</td><td>' + value.volume_24 + '</td><td>2,259,017</td></tr>');
           });
         } else {
           console.log(info);

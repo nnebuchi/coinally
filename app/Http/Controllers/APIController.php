@@ -58,12 +58,12 @@ class APIController extends Controller
                 'message'=>'invalid bearer token'
             ], 406);
         }
-        $tokens = Token::all();
+        $tokens = Token::with('chain')->get();
         // $tokens = Token::paginate(10);
 
         return Response::json([
             'status'=>'success',
-            'networks'=>$tokens
+            'tokens'=>$tokens
         ], 200);
     }
 

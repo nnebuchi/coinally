@@ -42,31 +42,25 @@ class UpdateMarketData extends Command
     {
        $tokens = Token::all();
        foreach($tokens as $token){
-           $response = $this->blockchainData->getTokenPrice($token);
-            $price = $response['data'][$token->chain->name]['dexTrades'][0]['quotePrice'];
-            // $explode = explode('E', $priceStr);
-            // $left = $explode[0];
-            // $right = $explode[1];
+           $getPrice = $this->blockchainData->getTokenPrice($token);
+           $getVol = $this->blockchainData->dailyVolume($token);
 
-            // if ((int)$right > 0) {
-            //     $newNum = (float)$left * 10^$right;
-            // }else{
-            //     $num = abs($right);
-            //     $newNum = $left/pow(10, $num);
-            // }
+           // dd($getVol);
 
-            // echo $newNum;
-            // echo '<br>';
-            // echo $num;
+            $price = $getPrice['data'][$token->chain->name]['dexTrades'][0]['quotePrice'];
 
-            // dd();
-            // echo $priceStr;
-            // echo '<br>';
-            // echo $newNum;
-            // dd();
+            $volDexTrades = $getVol['data'][$token->chain->name]['dexTrades'];
+
+            $vol24 = 0;
+            foreach( $volDexTrades as $trades ){
+                $vol24 = $vol24 + $trades['baseAmount'];
+            }
+
+           
            $token->price = $price;
-           // $token->volume_24 = $response->volume;
+           $token->volume_24 = $vol24;
            $token->save();
        }
     }
+
 }

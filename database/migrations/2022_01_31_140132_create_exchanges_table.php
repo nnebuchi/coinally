@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokensTable extends Migration
+class CreateExchangesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('tokens', function (Blueprint $table) {
+        Schema::create('exchanges', function (Blueprint $table) {
             $table->id();
-            $table->string('symbol');
-            $table->string('network')->nullable();
-            $table->integer('exchange_id');
-            $table->integer('chain_id');
-            $table->string('logo')->nullable();
-            $table->decimal('price', '15', '8');
+            $table->string('name');
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tokens');
+        Schema::dropIfExists('exchanges');
     }
 }

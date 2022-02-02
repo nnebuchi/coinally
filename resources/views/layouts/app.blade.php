@@ -14,6 +14,7 @@
 
     <script>
         var url ="{{ url('/') }}"
+        var assetUrl = "{{ asset('storage') }}"
     </script>
 </head>
 

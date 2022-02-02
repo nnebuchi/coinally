@@ -8,11 +8,14 @@ class Tokens extends Component{
 
     constructor(){
         super()
-        // this.state = {
-        //     data: {}
-        // }
+        this.state = {
+            data: {},
+            assetUrl:{},
+            tokenUrl:{}
+        }
        
         this.url = window.url
+        // this.assetUrl = window.assetUrl;
         // this.apiCalls = new apiCalls();
 
         
@@ -36,15 +39,18 @@ class Tokens extends Component{
                 this.setState({
                     data: info
                 })
-                console.log(info)
+                
                 $('#token-list').empty()
                 
                 // <option value="1">ETH Tokens</option>
                 if(info.status=='success'){
-                    $.each(info.networks, function( index, value ) {
-                       
-                        $('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="./assets/images/icons/binance-coin-logo.png" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="./assets/images/icons/missing-b1bd71fb52d8fdf89d0fb13c1b9407d5157e33b1b5daf7b13df0d65bae1f0657.png" className="pr-1" width="30" alt="" /> <a href="./shiba.html" className="text-decoration-none custom-text">SHIBA INU</a></td><td> '+value.symbol+'</td><td>$0.00002870</td><td>$2,175,962,199</td><td>$2,259,017</td></tr>')
-                      });
+                    $.each(info.tokens, function( index, value ){
+
+                         let  tokenUrl = window.assetUrl+'/token_icons/'+value.logo;
+                         let chainUrl = window.assetUrl+'/chain_icons/'+value.chain.icon;
+
+                        $('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="'+chainUrl+'" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="'+tokenUrl+'" className="pr-1" width="30" alt="" /> <a href="./shiba.html" className="text-decoration-none custom-text">'+value.symbol+'</a></td><td> '+value.symbol+'</td><td>$'+value.price+'</td><td>'+value.volume_24+'</td><td>2,259,017</td></tr>')
+                    });
                 }else{
                     
                     console.log(info)
