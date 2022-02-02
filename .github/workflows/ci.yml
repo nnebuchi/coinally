@@ -15,7 +15,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.2.0
       with:
         server: srv76.naijadomains.com/
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
         server-dir: coinanally.com/
         script: './server_deploy.sh'
