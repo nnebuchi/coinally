@@ -58,10 +58,11 @@ class CentralLogo extends Component{
     //  }
 
     render(){
+        const appAssetUrl = window.appAssetUrl
         return(
             <div className="my-5">
                 <div className="coinally-img">
-                    <img src="./assets/images/coinally.png" alt="" />
+                    <img src={appAssetUrl+'assets/images/coinally.png'} alt="" />
                 </div>
 
                 <div className="coinally-text text-center FredokaOne">

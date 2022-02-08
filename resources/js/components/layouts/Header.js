@@ -6,7 +6,7 @@ function Header() {
         <nav className="navbar navbar-expand-sm navbar-light custom-navbar bg-light">
         <div className="container">
             <a className="navbar-brand custom-text-shadow FredokaOne text-white" href="index.html">
-                <img src="assets/images/coinally.png" width="25" alt="" /> Coinally
+                <img src={window.appAssetUrl+'assets/images/coinally.png'} width="25" alt="" /> Coinally
             </a>
             <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             

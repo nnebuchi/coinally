@@ -6,25 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <script src="assets/jquery/jquery-3.4.1.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fontawesome/css/all.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-
+    <script src="{{ asset('assets/jquery/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    {{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
     <script>
         var url ="{{ url('/') }}"
         var assetUrl = "{{ asset('storage') }}"
+        var appAssetUrl = "{{ asset('/') }}"
     </script>
+    {{-- <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script> --}}
+     {{-- <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script> --}}
+
+     
+     {{-- <script type="text/javascript">
+        
+    </script> --}}
 </head>
 
 <body>
-    <div id="header"></div>
+    {{-- <div id="header"></div> --}}
+    @include('layouts.components.header')
     
     @yield('content')
 
-    <div id="footer"></div>
-    <script type="text/javascript" src="js/app.js"></script>
+    @include('layouts.components.footer')
+    {{-- <div id="footer"></div> --}}
+    {{-- <script type="text/javascript" src="{{ asset('js/app.js')}}"></script> --}}
 </body>
 
 </html>

@@ -46,10 +46,10 @@ class Tokens extends Component{
                 if(info.status=='success'){
                     $.each(info.tokens, function( index, value ){
 
-                         let  tokenUrl = window.assetUrl+'/token_icons/'+value.logo;
+                         let tokenUrl = window.assetUrl+'/token_icons/'+value.logo;
                          let chainUrl = window.assetUrl+'/chain_icons/'+value.chain.icon;
 
-                        $('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="'+chainUrl+'" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="'+tokenUrl+'" className="pr-1" width="30" alt="" /> <a href="./shiba.html" className="text-decoration-none custom-text">'+value.symbol+'</a></td><td> '+value.symbol+'</td><td>$'+value.price+'</td><td>'+value.volume_24+'</td><td>2,259,017</td></tr>')
+                        $('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="'+chainUrl+'" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="'+tokenUrl+'" className="pr-1" width="30" alt="" /> <a href="'+ window.url+'/pools/'+value.chain.name+'/tokens/'+value.base_address+'" className="text-decoration-none custom-text">'+value.symbol+'</a></td><td> '+value.symbol+'</td><td>$'+value.price+'</td><td>'+value.volume_24+'</td><td>2,259,017</td></tr>')
                     });
                 }else{
                     

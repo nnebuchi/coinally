@@ -118,7 +118,6 @@ class BlockchainData
                 'query' => $query
             ]);
 
-
             return $response->json();
     }
 
@@ -175,7 +174,6 @@ class BlockchainData
             ])->post('https://graphql.bitquery.io/', [
                 'query' => $query
             ]);
-
 
             return $response->json();
     }

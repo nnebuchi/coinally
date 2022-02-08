@@ -12,11 +12,13 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
-require('./components/Index');
+// require('./components/Example');
+
 require('./components/layouts/Header');
-require('./components/layouts/Footer');
-require('./components/Tokens');
-require('./components/Tokens');
+require('./components/Index');
+require('./components/CoinData');
 require('./components/CentralLogo');
 require('./components/WideSearchForm');
+require('./components/Tokens');
+require('./components/layouts/Footer');
+

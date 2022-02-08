@@ -16,6 +16,7 @@ use App\Http\Controllers\PagesController;
 */
 
 Route::get('/', [PagesController::class, 'index'])->name('welcome');
+Route::get('/pools/{chain}/tokens/{address}', [PagesController::class, 'tokenData'])->name('token-via-chain');
 
 Route::get('test', function () {
     return view('test');
