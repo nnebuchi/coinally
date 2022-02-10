@@ -64,7 +64,6 @@ class Tokens extends Component{
 
     componentDidMount(){
         this.fixTokens()
-        //this.fixTokens()
          
      }
 

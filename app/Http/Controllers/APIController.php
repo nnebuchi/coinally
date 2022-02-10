@@ -81,6 +81,8 @@ class APIController extends Controller
                  'message'=>'invalid bearer token'
              ], 406);
          }
+
+        
         $query = <<<GQL
             query {
                 ethereum(network: bsc) {
@@ -118,7 +120,88 @@ class APIController extends Controller
                 'query' => $query
             ]);
 
+           return $response->json();
+    }
+
+    function getLatestTradesForGivenPair(Request $request){
+
+         // if (!$request->hasHeader('authorization')) {
+         //    return Response::json([
+         //         'status'=>'fail',
+         //         'message'=>'missing authorization header'
+         //     ], 406);
+         // }
+         // if ($request->bearerToken() != $this->token) {
+         //      return Response::json([
+         //         'status'=>'fail',
+         //         'message'=>'invalid bearer token'
+         //     ], 406);
+         // }
+        // return $request;
+
+        $now = time();
+        $endIso =  date('c', $now);
+        $start = $now - 86400;
+        $startIso = date('c', $start);
+        $baseAddress = $request->base_address;
+        $quoteAddress = $request->quote_address;
+        $network = $request->network;
+        $exchange = $request->exchange;
+
+        $query = <<<GQL
+            
+             query {
+                ethereum(network: $network) {
+                  dexTrades(
+                    baseCurrency: {is: "$baseAddress"}
+                    options: {limit: 10}
+                    time: {till: "$endIso", since: "$startIso"}
+                    quoteCurrency: {is: "$quoteAddress"}
+                  ) {
+                    tradeAmount(in: USD)
+                    quoteCurrency {
+                      symbol
+                      decimals
+                      name
+                    }
+                    baseAmount(calculate: anyLast)
+                    baseCurrency {
+                      decimals
+                      name
+                      symbol
+                    }
+                    quotePrice(calculate: anyLast, exchangeName: {is: "$exchange"})
+                    sellCurrency {
+                      symbol
+                      name
+                    }
+                    date {
+                      date
+                    }
+                    transaction {
+                        to {
+                          annotation
+                          address
+                        }
+                        txFrom {
+                          address
+                        }
+                        hash
+                    }
+                  }
+                }
+              }
+
+            GQL;
+
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'X-API-KEY'=>'BQYshahSPmMeRFldJmCee0NNDaOVQnU1',
+            ])->post('https://graphql.bitquery.io/', [
+                'query' => $query
+            ]);
 
            return $response->json();
     }
+    
 }

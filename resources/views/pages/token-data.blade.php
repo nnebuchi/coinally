@@ -55,8 +55,8 @@
                                         <li  style="display: inline;" class="icon-coin"><img src="{{ asset('storage/token_icons/'.$coin->logo) }}" width="20" alt="" />
                                         </li>
                                         <li  style="display: inline;" class="icon-coin"><img src="{{ asset('storage/token_icons/'.strtolower($coin->quote_currency).'.png') }}" width="20" alt="" /></li>
-                                        <li  style="display: inline;" class="font-weight-bold text-white">SHIB</li>
-                                        <li  style="display: inline;" class="text-white">WBNB</li>
+                                        <li  style="display: inline;" class="font-weight-bold text-white">{{ $coin->symbol }}</li>
+                                        <li  style="display: inline;" class="text-white">{{ $coin->quote_currency }}</li>
                                     </ul>
                                 </div>
                                 <div class="coin-price">
@@ -202,88 +202,60 @@
                                 <thead>
                                     <tr class="text-uppercase">
                                         <th scope="col">type</th>
-                                        <th scope="col">price (bnb)</th>
+                                        {{-- <th scope="col">price (bnb)</th> --}}
                                         <th scope="col">price (usd)</th>
-                                        <th scope="col">amount (shib)</th>
-                                        <th scope="col">total bnb</th>
+                                        <th scope="col">amount ({{ $coin->symbol }})</th>
+                                        <th scope="col">total {{ $coin->quote_currency }}</th>
                                         <th scope="col">time</th>
                                         <th scope="col">from</th>
                                         <th scope="col">tx</th>
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="">
-                                        <td scope="row" class="custom-green">Buy</td>
-                                        <td class="custom-green">0.00000006</td>
-                                        <td class="custom-green">$0.00003053</td>
-                                        <td class="custom-green">30,828,580</td>
-                                        <td class="custom-green">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row" class="custom-red">Sell</td>
-                                        <td class="custom-red">0.00000006</td>
-                                        <td class="custom-red">$0.00003053</td>
-                                        <td class="custom-red">30,828,580</td>
-                                        <td class="custom-red">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row" class="custom-red">Sell</td>
-                                        <td class="custom-red">0.00000006</td>
-                                        <td class="custom-red">$0.00003053</td>
-                                        <td class="custom-red">30,828,580</td>
-                                        <td class="custom-red">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-                                    </tr>
-
-                                    <tr class="">
-                                        <td scope="row" class="custom-green">Buy</td>
-                                        <td class="custom-green">0.00000006</td>
-                                        <td class="custom-green">$0.00003053</td>
-                                        <td class="custom-green"> 30,828,580</td>
-                                        <td class="custom-green">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td scope="row" class="custom-red">Sell</td>
-                                        <td class="custom-red">0.00000007</td>
-                                        <td class="custom-red">$0.00003053</td>
-                                        <td class="custom-red">30,828,580</td>
-                                        <td class="custom-red">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td scope="row" class="custom-green">Buy</td>
-                                        <td class="custom-green">0.00000007</td>
-                                        <td class="custom-green">$0.00003053</td>
-                                        <td class="custom-green">30,828,580</td>
-                                        <td class="custom-green">2.00000000</td>
-                                        <td>2 minutes ago</td>
-                                        <td>0xc02ba...</td>
-                                        <td><a href="#">View</a></td>
-
-
-
-                                    </tr>
-                                </tbody>
+                                <tbody id="trade-history"></tbody>
                             </table>
                         </div>
                     </div>
                 </section>
+
+
+                <script>
+
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('latest-pair-trade') }}",
+                        data:{
+                            base_address: "{{ $coin->base_address }}",
+                            quote_address: "{{ $coin->quote_address }}",
+                            network: "{{ $coin->chain->name }}",
+                            exchange: "{{ $coin->exchange->name }}",
+                        },
+                        success:function(feedback){
+                            // feedback = JSON.parse(feedback);
+                            const trades = feedback.data.ethereum.dexTrades
+                            console.log(trades);
+                            $('#trade-history').empty();
+                             $.each(trades, function( index, value ){
+                                // let sellCurrSym = value.sellCurrency.symbol
+                                className = value.sellCurrency.symbol == value.baseCurrency.symbol?'custom-red':'custom-green';
+                                tradeType = value.sellCurrency.symbol == value.baseCurrency.symbol?'sell':'buy';
+                                $('#trade-history').append(`<tr class="">
+                                        <td scope="row" class="`+className+`">`+tradeType+`</td>
+                                        
+                                        <td class="`+className+`">$`+value.quotePrice+`</td>
+                                        <td class="`+className+`">`+numberWithCommas(value.baseAmount)+`</td>
+                                        <td class="`+className+`">`+numberWithCommas(value.tradeAmount)+`</td>
+                                        <td>`+value.date.date+`</td>
+                                        <td>`+value.transaction.txFrom.address.substring(0, 8)+`</td>
+                                        <td><a href="https://etherscan.io/tx/`+value.transaction.hash+`" target="_blank">View</a></td>
+                                    </tr>`)
+                             })
+                        },
+                        error:function(param1, param2, param3){
+                            alert(param3)
+                        }
+                    });
+                </script>
 
 
 @endsection

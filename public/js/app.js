@@ -7054,7 +7054,7 @@ var Tokens = /*#__PURE__*/function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.fixTokens(); //this.fixTokens()
+      this.fixTokens();
     }
   }, {
     key: "render",

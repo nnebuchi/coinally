@@ -72,3 +72,75 @@ search a sttring on entire blockchain
   }
 }
 
+
+
+//latest trades on a pair
+
+query MyQuery {
+  ethereum(network: ethereum) {
+    dexTrades(
+      baseCurrency: {is: "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce"}
+      options: {limit: 10}
+      time: {till: "2022-02-09", since: "2022-02-01"}
+      quoteCurrency: {is: "0xdac17f958d2ee523a2206206994597c13d831ec7"}
+    ) {
+      tradeAmount(in: USD)
+      quoteCurrency {
+        symbol
+        decimals
+        name
+      }
+      baseAmount(calculate: anyLast)
+      baseCurrency {
+        decimals
+        name
+        symbol
+      }
+      quotePrice(calculate: anyLast, exchangeName: {is: "Uniswap"})
+      sellCurrency {
+        symbol
+        name
+      }
+      date {
+        date
+      }
+    }
+  }
+}
+
+
+
+
+misccelanous
+query ($baseAddress: String, 
+  $quoteAddress: String, $from: ISO8601DateTime!) {
+  ethereum(network: ethereum) {
+    dexTrades(
+      time: {between: ["2021-01-29T11:00:00Z","2021-01-29T11:05:00Z"]}
+      baseCurrency: {is: $baseAddress}, quoteCurrency: {is: $quoteAddress}, date: {since: $from}, priceAsymmetry: {lt: 0.7}, any: [{tradeAmountUsd: {gt: 0.00001}}, {tradeAmountUsd: {is: 0}}]) {
+      
+      transaction {
+        hash
+      }
+      tradeIndex
+      
+      protocol
+      exchange{name}
+      buyCurrency: baseCurrency {
+        symbol
+        address
+      }
+      buyAmount: baseAmount
+      sellCurrency: quoteCurrency {
+        symbol
+        address
+      }
+      volume: quoteAmount
+      trades: count
+      high: quotePrice(calculate: maximum)
+      low: quotePrice(calculate: minimum)
+      open: minimum(of: block, get: quote_price)
+      close: maximum(of: block, get: quote_price)
+    }
+  }
+}

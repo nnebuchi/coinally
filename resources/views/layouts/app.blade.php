@@ -11,13 +11,12 @@
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
-    {{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script>
         var url ="{{ url('/') }}"
         var assetUrl = "{{ asset('storage') }}"
         var appAssetUrl = "{{ asset('/') }}"
     </script>
-    {{-- <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script> --}}
      {{-- <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script> --}}
 
      
@@ -38,3 +37,7 @@
 </body>
 
 </html>
+
+.logo-div{
+    
+}
