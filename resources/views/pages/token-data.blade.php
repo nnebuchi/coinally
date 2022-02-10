@@ -203,7 +203,7 @@
                                     <tr class="text-uppercase">
                                         <th scope="col">type</th>
                                         {{-- <th scope="col">price (bnb)</th> --}}
-                                        <th scope="col">price (usd)</th>
+                                        <th scope="col">price ({{ $coin->quote_currency }})</th>
                                         <th scope="col">amount ({{ $coin->symbol }})</th>
                                         <th scope="col">total {{ $coin->quote_currency }}</th>
                                         <th scope="col">time</th>
