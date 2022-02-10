@@ -13,7 +13,7 @@
                 "style": "1",
                 "locale": "en",
                 "toolbar_bg": "#f1f3f6",
-                "enable_publishing": true,
+                "enable_publishing": false,
                 "withdateranges": true,
                 "range": "YTD",
                 "hide_side_toolbar": false,
@@ -34,7 +34,7 @@
                     <div class="container mt-5">
 
                         @include('layouts.components.center-logo')
-                        <div id="wide-token-search"></div>
+                        @include('layouts.components.wide-search-form')
                     </div>
                 </section>
 
@@ -120,7 +120,7 @@
                                     </div>
                                     <hr class="custom-hr" />
 
-                                    <div class="row my-2">
+                                    {{-- <div class="row my-2">
                                         <div class="col-6 text-left">
                                             Fully Diluted Valuation
                                         </div>
@@ -138,7 +138,7 @@
                                             $1,264,286
                                         </div>
                                     </div>
-                                    <hr class="custom-hr" />
+                                    <hr class="custom-hr" /> --}}
                                     <div class="row my-2">
                                         <div class="col-6 text-left">
                                             24hr Trading Volume
@@ -252,7 +252,8 @@
                              })
                         },
                         error:function(param1, param2, param3){
-                            alert(param3)
+                            // alert(param3)
+                            console.log(param3)
                         }
                     });
                 </script>

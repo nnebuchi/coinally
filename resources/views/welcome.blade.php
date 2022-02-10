@@ -16,11 +16,12 @@
                 View price charts for any token in your wallet (binance smart chain)
             </div>
         </div>
-        <form action="">
+        <form  action="{{ route('search') }}">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-4">
                     <div class="input-group mt-4">
-                        <input type="text" class="form-control custom-token-form-control" placeholder="Enter token name / address" aria-label="Text input with dropdown button" />
+                        <input type="hidden" name="scope" value="blockchain">
+                        <input type="text" class="form-control custom-token-form-control" placeholder="Enter token name / address" aria-label="Text input with dropdown button" name="q" />
                         <div class="input-group-append">
                             <button class="btn btn-secondary custom-token-search">Go</button>
                         </div>
@@ -287,7 +288,8 @@
                     </div>
                 </div>
             </div>
-            <div id="wide-token-search"></div>
+            {{-- <div id="wide-token-search"></div> --}}
+            @include('layouts.components.wide-search-form')
     </div>
 
 

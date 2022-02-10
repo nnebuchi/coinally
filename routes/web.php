@@ -19,7 +19,7 @@ use App\Http\Controllers\APIController;
 Route::get('/', [PagesController::class, 'index'])->name('welcome');
 Route::get('/pools/{chain}/tokens/{address}', [PagesController::class, 'tokenData'])->name('token-via-chain');
 Route::get('/latest-pair-trade', [APIController::class, 'getLatestTradesForGivenPair'])->name('latest-pair-trade');
-
+Route::get('/search', [APIController::class, 'search'])->name('search');
 Route::get('test', function () {
     return view('test');
 });

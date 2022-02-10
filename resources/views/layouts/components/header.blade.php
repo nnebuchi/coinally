@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-light custom-navbar bg-light">
     <div class="container">
-        <a class="navbar-brand custom-text-shadow FredokaOne text-white" href="index.html">
+        <a class="navbar-brand custom-text-shadow FredokaOne text-white" href="{{ url('/') }}">
             <img src="{{ asset('assets/images/coinally.png') }}" width="25" alt="" /> Coinally
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">

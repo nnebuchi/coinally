@@ -15,11 +15,7 @@ class APIController extends Controller
         $this->token = 'eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0MzEwNTQ0MiwiaWF0IjoxNjQzMTA1NDQyfQ.HHjIscWL29AHwVpN-KRdHvp6DAC_wv1qL6zG2CDCX9ftHuTepe-dBfqKL0M31Sn_Wd6A8y3zNnVyAK195s4oXQ';
     }
     public function getNetworks(Request $request){
-        // return Response::json([
-        //     'status'=>'success',
-        //     'bearerToken'=>$request->bearerToken(),
-        //     'access_token'=>$this->token
-        // ], 200);
+        
         if (!$request->hasHeader('authorization')) {
            return Response::json([
                 'status'=>'fail',
@@ -125,20 +121,6 @@ class APIController extends Controller
 
     function getLatestTradesForGivenPair(Request $request){
 
-         // if (!$request->hasHeader('authorization')) {
-         //    return Response::json([
-         //         'status'=>'fail',
-         //         'message'=>'missing authorization header'
-         //     ], 406);
-         // }
-         // if ($request->bearerToken() != $this->token) {
-         //      return Response::json([
-         //         'status'=>'fail',
-         //         'message'=>'invalid bearer token'
-         //     ], 406);
-         // }
-        // return $request;
-
         $now = time();
         $endIso =  date('c', $now);
         $start = $now - 86400;
@@ -203,5 +185,51 @@ class APIController extends Controller
 
            return $response->json();
     }
-    
+
+
+    function search(Request $request){
+        $string = $request->q;
+        $scope = $request->scope;
+        if ($scope == 'blockchain') {
+            
+            $query = <<<GQL
+            
+             query {
+                search(string: "$string", limit: 1) {
+                    subject {
+                      ... on SmartContract {
+                        address
+                        annotation
+                        contractType
+                        protocol
+                      }
+                      ... on Currency {
+                        address
+                        name
+                        symbol
+                        tokenType
+                        decimals
+                      }
+                    }
+                    network {
+                      network
+                      protocol
+                    }
+                  }
+              }
+
+            GQL;
+
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'X-API-KEY'=>'BQYshahSPmMeRFldJmCee0NNDaOVQnU1',
+            ])->post('https://graphql.bitquery.io/', [
+                'query' => $query
+            ]);
+            dd($response->json());
+            return;
+
+        }
+         
+    }
 }
