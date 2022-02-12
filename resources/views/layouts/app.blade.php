@@ -37,7 +37,3 @@
 </body>
 
 </html>
-
-.logo-div{
-    
-}

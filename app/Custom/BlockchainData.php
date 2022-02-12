@@ -77,7 +77,6 @@ class BlockchainData
     }
 
     function getTokenPrice($token){
-        // dd($token);
         $baseAddr = $token->base_address;
         $quoteAddr = $token->quote_address;
         // dd($quoteAddr);

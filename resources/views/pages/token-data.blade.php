@@ -26,9 +26,6 @@
     </script>
    
     {{-- <div id="token-data"></div> --}}
-
-
-
                 
                 <section>
                     <div class="container mt-5">
@@ -221,41 +218,70 @@
 
                 <script>
 
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ route('latest-pair-trade') }}",
-                        data:{
-                            base_address: "{{ $coin->base_address }}",
-                            quote_address: "{{ $coin->quote_address }}",
-                            network: "{{ $coin->chain->name }}",
-                            exchange: "{{ $coin->exchange->name }}",
-                        },
-                        success:function(feedback){
-                            // feedback = JSON.parse(feedback);
-                            const trades = feedback.data.ethereum.dexTrades
-                            console.log(trades);
-                            $('#trade-history').empty();
-                             $.each(trades, function( index, value ){
-                                // let sellCurrSym = value.sellCurrency.symbol
-                                className = value.sellCurrency.symbol == value.baseCurrency.symbol?'custom-red':'custom-green';
-                                tradeType = value.sellCurrency.symbol == value.baseCurrency.symbol?'sell':'buy';
-                                $('#trade-history').append(`<tr class="">
-                                        <td scope="row" class="`+className+`">`+tradeType+`</td>
-                                        
-                                        <td class="`+className+`">$`+value.quotePrice+`</td>
-                                        <td class="`+className+`">`+numberWithCommas(value.baseAmount)+`</td>
-                                        <td class="`+className+`">`+numberWithCommas(value.tradeAmount)+`</td>
-                                        <td>`+value.date.date+`</td>
-                                        <td>`+value.transaction.txFrom.address.substring(0, 8)+`</td>
-                                        <td><a href="https://etherscan.io/tx/`+value.transaction.hash+`" target="_blank">View</a></td>
-                                    </tr>`)
-                             })
-                        },
-                        error:function(param1, param2, param3){
-                            // alert(param3)
-                            console.log(param3)
-                        }
-                    });
+                    function getTrades(){
+                         $.ajax({
+                            type: "GET",
+                            url: "{{ route('latest-pair-trade') }}",
+                            data:{
+                                base_address: "{{ $coin->base_address }}",
+                                quote_address: "{{ $coin->quote_address }}",
+                                network: "{{ $coin->chain->name }}",
+                                exchange: "{{ $coin->exchange->name }}",
+                            },
+                            success:function(feedback){
+                                // feedback = JSON.parse(feedback);
+                                const trades = feedback.data.ethereum.dexTrades
+                                console.log(trades);
+                                $('#trade-history').empty();
+                                 $.each(trades, function( index, value ){
+                                    // let sellCurrSym = value.sellCurrency.symbol
+                                    className = value.sellCurrency.symbol == value.baseCurrency.symbol?'custom-red':'custom-green';
+                                    tradeType = value.sellCurrency.symbol == value.baseCurrency.symbol?'sell':'buy';
+                                    $('#trade-history').append(`<tr class="">
+                                            <td scope="row" class="`+className+`">`+tradeType+`</td>
+                                            
+                                            <td class="`+className+`">$`+value.quotePrice+`</td>
+                                            <td class="`+className+`">`+numberWithCommas(value.baseAmount)+`</td>
+                                            <td class="`+className+`">`+numberWithCommas(value.tradeAmount)+`</td>
+                                            <td>`+value.date.date+`</td>
+                                            <td>`+value.transaction.txFrom.address.substring(0, 8)+`</td>
+                                            <td><a href="https://etherscan.io/tx/`+value.transaction.hash+`" target="_blank">View</a></td>
+                                        </tr>`)
+                                 })
+                            },
+                            error:function(param1, param2, param3){
+                                // alert(param3)
+                                console.log(param3)
+                            }
+                        });
+                    }
+
+
+                    function getCurrentTokenPrice(){
+                        $.ajax({
+                            url: "{{ url('get-token-price') }}",
+                            tpe:"GET",
+                            data:{
+                                token:"{{ $coin->symbol }}"
+                            },
+
+                            success:function(response){
+                                let price = response.data.ethereum.dexTrades[0].quotePrice
+                                // console.log(response.data.ethereum.dexTrades[0].quotePrice);
+                                $('.coin-fiat').text(price.toFixed(8));
+
+                            },
+                            error:function(param1, param2, param3){
+                                alert(param3);
+                            }
+                        })
+                    }
+
+                   getTrades();
+                   getCurrentTokenPrice();
+
+                   setInterval(getTrades, 600000);
+                   setInterval(getCurrentTokenPrice, 600000);
                 </script>
 
 

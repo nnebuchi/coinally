@@ -20,6 +20,7 @@ Route::get('/', [PagesController::class, 'index'])->name('welcome');
 Route::get('/pools/{chain}/tokens/{address}', [PagesController::class, 'tokenData'])->name('token-via-chain');
 Route::get('/latest-pair-trade', [APIController::class, 'getLatestTradesForGivenPair'])->name('latest-pair-trade');
 Route::get('/search', [APIController::class, 'search'])->name('search');
+Route::get('/get-token-price', [APIController::class, 'currentTokenPrice'])->name('get-token-price');
 Route::get('test', function () {
     return view('test');
 });
