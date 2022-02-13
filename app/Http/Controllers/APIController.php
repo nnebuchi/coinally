@@ -234,8 +234,34 @@ class APIController extends Controller
             ])->post('https://graphql.bitquery.io/', [
                 'query' => $query
             ]);
+            $response = $response->json();
+            if (array_key_exists('data', $response)) {
+                // dd('kkk');
+                if (array_key_exists('search', $response['data'])) {
+                    if (array_key_exists(0, $response['data']['search'])) {
+                        if (array_key_exists('subject', $response['data']['search'][0])) {
+                            $status = 'seen';
+                            $tokenAddr = $data['tokenAddr'] = $response['data']['search'][0]['subject']['address'];
+                            $tokenChain = $data['tokenChain'] = $response['data']['search'][0]['network']['network'];
+                            $tokenSymbol = $data['tokenSymbol'] = $response['data']['search'][0]['subject']['symbol'];
+                            $tokenName = $data['tokenName'] = $response['data']['search'][0]['subject']['name'];
+                            $tokenType = $data['tokenType'] = $response['data']['search'][0]['subject']['tokenType'];
+                            $token = Token::where('symbol', $tokenSymbol)->first();
+                            if (!is_null($token)) {
+                                return redirect(route('token-via-chain', [$tokenChain, $tokenAddr]));
+                            }else{
+                                // dd($data);
+                                return view('pages.search-result')->with($data);
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            if (!isset($status)) {
+                dd($response->json());
+            }
             
-            dd($response->json());
             return;
 
         }

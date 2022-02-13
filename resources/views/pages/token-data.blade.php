@@ -280,8 +280,8 @@
                    getTrades();
                    getCurrentTokenPrice();
 
-                   setInterval(getTrades, 600000);
-                   setInterval(getCurrentTokenPrice, 600000);
+                   setInterval(getTrades, 60000);
+                   setInterval(getCurrentTokenPrice, 60000);
                 </script>
 
 
