@@ -20,7 +20,7 @@ class CreateTokensTable extends Migration
             $table->integer('exchange_id');
             $table->integer('chain_id');
             $table->string('logo')->nullable();
-            $table->decimal('price', '15', '8');
+            $table->decimal('price', '15', '8')->nullable();
             $table->timestamps();
         });
     }
