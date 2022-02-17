@@ -8,6 +8,8 @@ use App\Models\Token;
 use App\Models\Exchange;
 use App\Custom\SanitizeInput;
 use Storage;
+use Auth;
+use Hash;
 class AdminController extends Controller
 {   
     function __construct(){
@@ -19,6 +21,26 @@ class AdminController extends Controller
         $exchanges = $data['exchanges'] = Exchange::all();
         $tokens = $data['tokens'] = Token::with('chain')->get();
         return view('admin.index')->with($data);
+    }
+
+    function login(){
+        return view('auth.admin.login');
+    }
+
+    function signin(Request $request){
+         $request->validate([
+            'email'   => 'required|email',
+            'password' => 'required'
+        ]);
+         $email = $this->clean->sanitize($request->email);
+         $password = $this->clean->sanitize($request->password);
+         $password = Hash::make($password);
+
+         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+
+            return redirect()->route('admin');
+        }
+        return back();
     }
 
     function addToken(Request $request){
@@ -51,8 +73,9 @@ class AdminController extends Controller
     }
 
     function updateToken(Request $request){
-        // dd($request);
+        
         $token = Token::where('id', $request->id)->first();
+        
         $token->long_name = $this->clean->sanitize($request->long_name);
         $token->symbol = $this->clean->sanitize($request->symbol);
         $token->quote_currency = $this->clean->sanitize($request->quote_currency);
@@ -62,9 +85,9 @@ class AdminController extends Controller
         $token->chain_id = $this->clean->sanitize($request->network);
         $token->long_name = $this->clean->sanitize($request->long_name);
         if ($request->hasFile('logo')) {
-           if (file_exists('.' . Storage::url('app/public/token_icons'.$token->logo)) && is_file('.' . Storage::url('app/public/token_icons'.$token->logo))) {
-                
-                    unlink('.' . Storage::url('app/public/token_icons'.$token->logo));
+            // dd('.' . Storage::url('app/public/token_icons/'.$token->logo));
+            if (file_exists('.' . Storage::url('app/public/token_icons/'.$token->logo)) && is_file('.' . Storage::url('app/public/token_icons/'.$token->logo))) {
+                unlink('.' . Storage::url('app/public/token_icons/'.$token->logo));
             }
             $logo         = $request->logo;
             $logoName = $logo->getClientOriginalName();
@@ -93,5 +116,11 @@ class AdminController extends Controller
         Token::where('id', $request->token_id)->delete();
         Session(['msg'=>'token deleted', 'alert'=>'success']);
         return redirect()->back();
+    }
+
+
+    function chains(){
+        $data['chains'] = Chain::all();
+        return view('admin.chains')->with($data);
     }
 }

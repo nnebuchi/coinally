@@ -79,10 +79,11 @@ class BlockchainData
     function getTokenPrice($token){
         $baseAddr = $token->base_address;
         $quoteAddr = $token->quote_address;
+        $chain = $token->chain->name;
         // dd($quoteAddr);
       $query = <<<GQL
             query {
-                ethereum(network: ethereum) {
+                ethereum(network: $chain) {
                     dexTrades(
                     baseCurrency: {is: "$baseAddr"}
                     quoteCurrency: {is: "$quoteAddr"}
@@ -173,7 +174,7 @@ class BlockchainData
             ])->post('https://graphql.bitquery.io/', [
                 'query' => $query
             ]);
-
+            // dd($response);
             return $response->json();
     }
 

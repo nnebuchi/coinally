@@ -10,22 +10,18 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12" style="position: relative;">
 							<div class="title">
-								<h4>Tokens</h4>
+								<h4>Chains</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation" class="">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Tokens</li>
+									<li class="breadcrumb-item active" aria-current="page">Chains</li>
 								</ol>
-
-								{{-- <div> --}}
-									{{-- <button class="btn btn-primary">Add Token</button> --}}
-								{{-- </div> --}}
 							</nav>
 							
 						</div>
 						<div class="col-md-6">
-							<button class="btn btn-primary" style="right:0; position: absolute;" data-toggle="modal" data-target="#addTokenModal">Add Token</button>
+							<button class="btn btn-primary" style="right:0; position: absolute;" data-toggle="modal" data-target="#addChainModal">Add Chain</button>
 						</div>
 						
 					</div>
@@ -33,7 +29,7 @@
 				<!-- Checkbox select Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Listed Tokens</h4>
+						<h4 class="text-blue h4">Listed Chains</h4>
 					</div>
 					<div class="pb-20">
 						<table class="checkbox-datatable table nowrap">
@@ -46,40 +42,42 @@
 								</div>
 							</th>
 							<th scope="col">#</th>
-                            <th scope="col">CHAIN</th>
-                            <th scope="col">TOKEN</th>
-                            <th scope="col">SYMBOL</th>
-                            <th scope="col">PRICE</th>
-                            <th scope="col">24 VOLUME</th>
-                            <th scope="col">LIQUIDITY</th>	
+
+                            <th scope="col">ICON</th>
+                            <th scope="col">SHORTNAME</th>
+                            <th scope="col">LONGNAME</th>
+                            <th scope="col">ABBR</th>
+                            <th scope="col">NATIVE CURRENCY</th>
+                            <th scope="col">NATIVE USD</th>	
                             <th scope="col">Action</th>								
                         </tr>
 							</thead>
 							<tbody>
 								@php $count = 0; @endphp
-								@foreach($tokens as $token)
+								@foreach($chains as $chain)
 								@php $count ++ @endphp
 								<tr>
 									<td></td>
 									<td>{{ $count }}</td>
-									<td><img src="{{ asset('storage/chain_icons/'.$token->chain->icon) }}" width="30" alt="" /></td>
-									<td class="Poppin-semibold custom-text"><img src="{{ asset('storage/token_icons/'.$token->logo) }}" class="pr-1" width="30" alt="" /> <a href="{{ route('token-via-chain', [$token->chain->name, $token->base_address]) }}" class="text-decoration-none custom-text">{{ $token->symbol }}</a></td>
-	                                <td> {{ $token->symbol }}</td>
-	                                <td>{{ $token->price }}</td>
-	                                <td>{{ $token->volume_24 }}</td>
-	                                <td>2,259,017</td>
+									<td><img src="{{ asset('storage/chain_icons/'.$chain->chain->icon) }}" width="30" alt="" /></td>
+									
+	                                <td> {{ $chain->name }}</td>
+	                                <td>{{ $chain->long_name }}</td>
+	                                <td>{{ $chain->abbr }}</td>
+	                                <td>{{ $chain->native_currency }}</td>
+	                                <td>{{ $chain->native_usd }}</td>
 									<td>
-										<a href="javascript::void(0)"  data-toggle="modal" data-target="#updateTokenModal-{{ $token->id }}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-eye"></i></a>
-										{{-- <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit-{{ $count }}">Edit <i class="fa fa-edit"></i></button> --}}
-										<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-{{ $token->symbol }}">Delete <i class="fa fa-trash"></i></button>
+										<a href="javascript::void(0)"  data-toggle="modal" data-target="#updateChainModal-{{ $chain->id }}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-eye"></i></a>
+										
+										<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-{{ $chain->name }}">Delete <i class="fa fa-trash"></i></button>
 									</td> 
 								</tr>
 
 								<!--Delete Modal -->
-								<div class="modal fade" id="delete-{{ $token->symbol }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal fade" id="delete-{{ $chain->name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 								  <div class="modal-dialog modal-dialog-centered" role="document">
 								    <div class="modal-content">
-								    	<form action="{{ route('delete-token') }}" method="post">
+								    	<form action="{{ route('delete-chain') }}" method="post">
 								    		@csrf
 										      <div class="modal-heade pt-3 row pr-1">
 										      	<div class="col-11">
@@ -96,14 +94,14 @@
 										      </div>
 										      <hr>
 										      <div class="modal-bod text-center">
-										      	Delete {{ $token->symbol }}?
-										        	<input type="hidden" name="token_id" value="{{ $token->id }}">
+										      	Delete {{ $chain->name }}?
+										        	<input type="hidden" name="chain_id" value="{{ $chain->id }}">
 										        	
 										      </div>
 										      <hr>
 										      <div class="modal-foote text-center py-3">
 										        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Go back</button>
-										        <button type="symbol" class="btn btn-primary">Proceed >></button>
+										        <button type="name" class="btn btn-primary">Proceed >></button>
 										      </div>
 								      	</form>
 								    </div>
@@ -118,14 +116,14 @@
 
 
 
-				<!-- Add Token Modal -->
-				<div class="modal fade" id="addTokenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<!-- Add Chain Modal -->
+				<div class="modal fade" id="addChainModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
-				    	<form action="{{ route('add-token') }}" method="post" enctype="multipart/form-data">
+				    	<form action="{{ route('add-chain') }}" method="post" enctype="multipart/form-data">
 				    		@csrf
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Add Token</h5>
+						        <h5 class="modal-title" id="exampleModalLabel">Add Chain</h5>
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">&times;</span>
 						        </button>
@@ -133,27 +131,28 @@
 						      <div class="modal-body">
 						       		
 					       			<div class="form-group">
-					       				<label>Name</label>
-					       				<input type="text" name="long_name" class="form-control" placeholder="ToKen Name" value="{{ old('long_name') }}">
+					       				<label>Long Name</label>
+					       				<input type="text" name="long_name" class="form-control" placeholder="e.g. Binance Smart Chain, Ethereum" value="{{ old('long_name') }}">
 					       			</div>
 					       			<div class="form-group">
-					       				<label>Symbol</label>
-					       				<input type="text" name="symbol" class="form-control" placeholder="ToKen Symbol" value="{{ old('symbol') }}">
+					       				<label>Short Name</label>
+					       				<input type="text" name="short_name" class="form-control" placeholder="e.g. BSC, Ethereum" value="{{ old('short_name') }}">
+					       			</div>
+					       			<div class="form-group">
+					       				<label>Abbr</label>
+					       				<input type="text" name="quote_currency" class="form-control" placeholder="e.g ETH, BSC" value="{{ old('quote_currency') }}">
 					       			</div>
 					       			<div class="form-group">
 					       				<label>Icon</label>
-					       				<input type="file" name="logo" class="form-control">
+					       				<input type="file" name="icon" class="form-control">
+					       			</div>
+					       			
+					       			<div class="form-group">
+					       				<label>Native Currency</label>
+					       				<input type="text" name="native_currency" class="form-control" placeholder="e.g ETH, BNB" value="{{ old('quote_address') }}">
 					       			</div>
 					       			<div class="form-group">
-					       				<label>Quote Currency</label>
-					       				<input type="text" name="quote_currency" class="form-control" placeholder="USDT" value="{{ old('quote_currency') }}">
-					       			</div>
-					       			<div class="form-group">
-					       				<label>Quote Currency Address</label>
-					       				<input type="text" name="quote_address" class="form-control" placeholder="Quote Currency Address" value="{{ old('quote_address') }}">
-					       			</div>
-					       			<div class="form-group">
-					       				<label>Base Currency Address</label>
+					       				<label>Native USD</label>
 					       				<input type="text" name="base_address" class="form-control" placeholder="Base Currency Address"  value="{{ old('base_address') }}">
 					       			</div>
 					       			<div class="form-group">
@@ -186,17 +185,17 @@
 				</div>
 
 				@php $cc = 0; @endphp
-				@foreach($tokens as $coin)
+				@foreach($chains as $coin)
 				@php $cc ++ @endphp
-				<!-- Edit Token Modal -->
-				<div class="modal fade" id="updateTokenModal-{{ $coin->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<!-- Edit Chain Modal -->
+				<div class="modal fade" id="updateChainModal-{{ $coin->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
-				    	<form action="{{ route('update-token') }}" method="post" enctype="multipart/form-data">
+				    	<form action="{{ route('update-chain') }}" method="post" enctype="multipart/form-data">
 				    		@csrf
-				    		  <input type="hidden" name="id" value="{{ $coin->id }}">
+				    		<input type="hidden" name="id" value="{{ $chain->id }}">
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Edit Token</h5>
+						        <h5 class="modal-title" id="exampleModalLabel">Edit Chain</h5>
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">&times;</span>
 						        </button>
@@ -209,7 +208,7 @@
 					       			</div>
 					       			<div class="form-group">
 					       				<label>Symbol</label>
-					       				<input type="text" name="symbol" class="form-control" placeholder="ToKen Symbol" value="{{ $coin->symbol }}">
+					       				<input type="text" name="name" class="form-control" placeholder="ToKen Symbol" value="{{ $coin->name }}">
 					       			</div>
 					       			<div class="form-group">
 					       				<label>Icon</label>
@@ -252,7 +251,7 @@
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						        <button type="submit" class="btn btn-primary">Submit</button>
 						      </div>
-						</form>
+						  </form>
 				    </div>
 				  </div>
 				</div>

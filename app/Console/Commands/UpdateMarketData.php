@@ -41,15 +41,20 @@ class UpdateMarketData extends Command
     public function handle()
     {
        $tokens = Token::all();
+       $count = 0;
        foreach($tokens as $token){
+        $count ++;
            $getPrice = $this->blockchainData->getTokenPrice($token);
            $getVol = $this->blockchainData->dailyVolume($token);
-
+           // if ($count == 2) {
+           //      dd($getPrice['data']['ethereum']);
+           // }
+          
            // dd($getVol);
 
-            $price = $getPrice['data'][$token->chain->name]['dexTrades'][0]['quotePrice'];
+            $price = $getPrice['data']['ethereum']['dexTrades'][0]['quotePrice'];
 
-            $volDexTrades = $getVol['data'][$token->chain->name]['dexTrades'];
+            $volDexTrades = $getVol['data']['ethereum']['dexTrades'];
 
             $vol24 = 0;
             foreach( $volDexTrades as $trades ){

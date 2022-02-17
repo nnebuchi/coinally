@@ -16,27 +16,24 @@
 								<span class="micon"> <i class=" fa fa-dashboard"></i></span><span class="mtext">Dashboard</span>
 							</a>
 						</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon"> <i class=" fa fa-usd"></i></span><span class="mtext">Tokens</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="{{route('admin')}}">All Tokens</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon"> <i class=" fa fa-address-book-o"></i></span><span class="mtext">Chains</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="{{ route('admin.chains') }}">Chains</a></li>
+							{{-- <li><a href="{{ url('contacts') }}">Manage Contacts</a></li> --}}
+						</ul>
+					</li>
 					{{-- <li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon"> <i class=" fa fa-envelope-open-o"></i></span><span class="mtext">SMS</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="{{url('compose-sms')}}">Compose</a></li>
-							<li><a href="{{ url('scheduled-sms') }}">Scheduled</a></li>
-							<li><a href="{{ url('sent-sms') }}">Sent</a></li>
-							<li><a href="{{ url('draft') }}">Draft</a></li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon"> <i class=" fa fa-address-book-o"></i></span><span class="mtext">Contacts</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="{{ url('create-contact') }}">Add Contact</a></li>
-							<li><a href="{{ url('contacts') }}">Manage Contacts</a></li>
-						</ul>
-					</li>
-					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon"> <i class=" fa fa-money"></i></span><span class="mtext">Units/Credits</span>
 						</a>

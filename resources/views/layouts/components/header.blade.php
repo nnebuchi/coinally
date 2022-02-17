@@ -48,8 +48,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <a href="#" class="btn btn-default btn-block">Connect wallet</a>
-                        <a href="#" class="btn btn-default btn-block">Metamask/Trustwallet</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-block">Connect wallet</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-block" onclick="connectMetamask()">Metamask/Trustwallet</a>
                         <a href="#" class="btn btn-default btn-block">Binance Chain Wallet</a>
 
 
