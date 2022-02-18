@@ -24,15 +24,15 @@
 							<li><a href="{{route('admin')}}">All Tokens</a></li>
 						</ul>
 					</li>
-					<li class="dropdown">
+					{{-- <li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon"> <i class=" fa fa-address-book-o"></i></span><span class="mtext">Chains</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="{{ route('admin.chains') }}">Chains</a></li>
-							{{-- <li><a href="{{ url('contacts') }}">Manage Contacts</a></li> --}}
+							
 						</ul>
-					</li>
+					</li> --}}
 					{{-- <li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon"> <i class=" fa fa-money"></i></span><span class="mtext">Units/Credits</span>
