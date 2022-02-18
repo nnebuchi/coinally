@@ -64,21 +64,9 @@
 
  <script>
 
-
-      
-          const BinanceChainNetwork = {
-            chainId: '0x38', // A 0x-prefixed hexadecimal chainId
-            chainName: 'Binance Smart Chain',
-            nativeCurrency: {
-                name: 'Binance Coin',
-                symbol: 'BNB',
-                decimals: 18
-            },
-            rpcUrls: ['https://bsc-dataseed.binance.org/'],
-            blockExplorerUrls: ['https://www.bscscan.com']
-        }
-
-        
+       $(document).ready(function(){
+            connectMetamask()
+        })
         var baseUrl="<?php echo url('/')?>";
          const ethereum = window.ethereum;
 
@@ -86,48 +74,14 @@
          
 
         function connectMetamask(){
-
-          // $('#waitpage').show();
-          // $('.loading').removeClass('d-none');
-          // $('.loading').show();
-          ethereum.request({ method: 'eth_chainId' })
-          .then((chainId) => {
-
-            if(chainId ==='0x38'){
-                
-              getAccount();
-            }else{
-                alert('mmm')
-            }
-           // console.log(`hexadecimal string: ${chainId}`);
-            //console.log(`decimal number: ${parseInt(chainId, 16)}`);
-          })
-          .catch((error) => {
-            $('.loading').hide();
-            $('#waitpage').hide();
-            
-            console.error(`Error fetching chainId: ${error.code}: ${error.message}`);
-          });
-
           
+          getAccount();
         }
 
         // ethereumButton.addEventListener('click', () => {
 
         // });
-        async function getNetwork(){
-
-          try{
-            const network = await ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [BinanceChainNetwork]
-          })
-          getAccount();
         
-          }catch(err){
-            console.log(err)
-          }
-        }
 
         async function getAccount() {
           
@@ -136,41 +90,12 @@
           const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
           
           const account = accounts[0];
+          $('#connect-btn').html(account.substring(0, 12)+'...')
           console.log(account);
-         // console.log(accounts);
-
-         // $.post(baseUrl+'/registerwithmetamask', {
-         //        metamask_account : account, 
-         //        _token : universal_token,
-         //    },
-
-         //    function(feed){
-         //      console.log(feed);
-         //      // feed = JSON.parse(feed);
-         //       if(feed.feedback=='regsuccess'){
-         //          $.post(baseUrl+'/loginwithmetamask',{
-         //                    email : feed.email,
-         //                    _token : universal_token,
-         //                },
-
-         //                    function(result){
-         //                      console.log(result)
-         //                       if(result=='loginsuccess'){
-         //                        alert('Logged in')
-         //                         // window.location.replace('');
-         //                       }else{
-         //                            alert('Login fail')
-         //                       }
-         //                    });
-                 
-         //       }else{
-         //            console.log(feed);
-         //       }
-         //    });
 
 
         }catch(err){
-          alert(err)
+          // alert(err)
           // $('.loading').hide();
           // $('#waitpage').hide();
           console.log(err);

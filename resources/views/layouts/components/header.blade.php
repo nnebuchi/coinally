@@ -33,7 +33,7 @@
 
             </ul>
             <div class="form-inline my-2 my-lg-0">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-default my-2 my-sm-0" type="submit"><i class="fas fa-link"></i> CONNECT</button>
+                <button type="button" {{-- data-toggle="modal" data-target="#exampleModal" --}} class="btn btn-default my-2 my-sm-0" onclick="connectMetamask()" id="connect-btn"><i class="fas fa-link"></i> <span class="connect-text">CONNECT</span> </button>
             </div>
         </div>
     </div>
