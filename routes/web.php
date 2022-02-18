@@ -33,11 +33,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('signin', [AdminController::class, 'signin'])->name('admin-login');
     
     Route::group(['middleware' => 'admin'], function () { 
-        Route::get('/', [AdminController::class, 'index'])->name('admin');
+        Route::get('index', [AdminController::class, 'index'])->name('admin');
         Route::post('add-token', [AdminController::class, 'addToken'])->name('add-token');
         Route::post('update-token', [AdminController::class, 'updateToken'])->name('update-token');
         Route::post('delete-token', [AdminController::class, 'deleteToken'])->name('delete-token');
-        Route::post('chains', [AdminController::class, 'chains'])->name('admin.chains');
+        Route::get('chains', [AdminController::class, 'chains'])->name('admin.chains');
     });
 });
 
