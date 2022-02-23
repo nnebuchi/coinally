@@ -302,7 +302,7 @@
                     Tokens
                 </div>
                 <div class="network float float-right text-white">
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" defaultValue="Network">
+                    <select class="custom-select mr-sm-2 network-select" id="inlineFormCustomSelect">
                     <option selected disabled>Network</option>
                     @foreach($networks as $network)
                         <option value="{{ $network->id }}">{{ strtoupper($network->name)  }}</option>
@@ -340,6 +340,37 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $('.network-select').on('change', function(){
+            let $this = $(this);
+            $.ajax({
+                url: "{{ route('get-tokens-by-network') }}",
+                type: "post",
+                data:{
+                    chain_id: $this.val(),
+                    _token:universal_token,
+                },
+                success:function(resp){
+                    console.log(resp);
+                    resp = JSON.parse(resp);
+
+                    $('#token-list').empty();
+
+                    $.each(resp.tokens, function( index, value ){
+
+                         let tokenUrl = window.assetUrl+'/token_icons/'+value.logo;
+                         let chainUrl = window.assetUrl+'/chain_icons/'+resp.chain.icon;
+
+                        $('#token-list').append('<tr className=""><th scope="row">1</th><td><img src="'+chainUrl+'" width="30" alt="" /></td><td className="Poppin-semibold custom-text"><img src="'+tokenUrl+'" className="pr-1" width="30" alt="" /> <a href="'+ window.url+'/pools/'+resp.chain.name+'/tokens/'+value.base_address+'" className="text-decoration-none custom-text">'+value.symbol+'</a></td><td> '+value.symbol+'</td><td>$'+value.price+'</td><td>'+value.volume_24+'</td><td>2,259,017</td></tr>')
+                    });
+                },
+                error:function(param1, param2, param3){
+                    alert(param3);
+                }
+            })
+        })
+    </script>
 
 @endsection
    

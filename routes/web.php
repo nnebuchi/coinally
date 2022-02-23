@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GenericController;
 
 
 /*
@@ -19,6 +20,7 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', [PagesController::class, 'index'])->name('welcome');
+Route::post('/get-tokens-by-network', [GenericController::class, 'tokensByNetwork'])->name('get-tokens-by-network');
 Route::get('/pools/{chain}/tokens/{address}', [PagesController::class, 'tokenData'])->name('token-via-chain');
 Route::get('/latest-pair-trade', [APIController::class, 'getLatestTradesForGivenPair'])->name('latest-pair-trade');
 Route::get('/search', [APIController::class, 'search'])->name('search');

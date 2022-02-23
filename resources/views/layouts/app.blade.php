@@ -13,9 +13,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script>
-        var url ="{{ url('/') }}"
-        var assetUrl = "{{ asset('storage') }}"
-        var appAssetUrl = "{{ asset('/') }}"
+        var url ="{{ url('/') }}";
+        var assetUrl = "{{ asset('storage') }}";
+        var appAssetUrl = "{{ asset('/') }}";
+
+        var universal_token = "{{ csrf_token() }}";
     </script>
      {{-- <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script> --}}
 
