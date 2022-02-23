@@ -3,8 +3,7 @@
         Coinally Copyright 2022
        
     </div>
-</footer>
-<div class="waitpage" id="waitpage" style="display: none;">
+    <div class="waitpage" id="waitpage" style="display: none;">
         <div class="waitpage-box">
             <p>
                 <img alt="(Loading)" src="{{ asset('phase2_assets/images/Ripple-2.4s-200px.svg') }}">
@@ -107,3 +106,5 @@
 
 
     </script>
+
+</footer>
