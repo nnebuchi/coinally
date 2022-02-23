@@ -372,5 +372,13 @@
         })
     </script>
 
+    <style>
+        #token-list a{
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+
 @endsection
    
