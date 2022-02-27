@@ -70,7 +70,11 @@
 	                                <td>2,259,017</td>
 									<td>
 										<a href="javascript::void(0)"  data-toggle="modal" data-target="#updateTokenModal-{{ $token->id }}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-eye"></i></a>
-										{{-- <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit-{{ $count }}">Edit <i class="fa fa-edit"></i></button> --}}
+
+										<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#promote-{{ $token->id }}" id="promote-btn-{{ $token->id }}">Promote </button>
+
+										<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#unpromote-{{ $token->id }}" id="unpromote-btn-{{ $token->id }}">Unpromote </button>
+
 										<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-{{ $token->symbol }}">Delete <i class="fa fa-trash"></i></button>
 									</td> 
 								</tr>
@@ -106,6 +110,66 @@
 										        <button type="symbol" class="btn btn-primary">Proceed >></button>
 										      </div>
 								      	</form>
+								    </div>
+								  </div>
+								</div>
+
+								<!--Promote Modal -->
+								<div class="modal fade" id="promote-{{ $token->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								    	
+										      <div class="modal-heade pt-3 row pr-1">
+										      	<div class="col-11">
+										      		<h6 class="text-center modal-title">Promote {{ $token->symbol }}</h6>
+										      	</div>
+										      	<div class="col-1 text-left">
+											      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+										      	</div>
+										        
+										      </div>
+										      <hr>
+										      <div class="modal-bod text-center">
+										      		
+										        	Click Proceed to confirm action
+										      </div>
+										      <hr>
+										      <div class="modal-foote text-center py-3">
+										        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Go back</button>
+										        <button type="symbol" class="btn btn-primary promote-btn" token-id="{{ $token->id }}">Proceed >></button>
+										      </div>
+								    </div>
+								  </div>
+								</div>
+
+								<!--Unromote Modal -->
+								<div class="modal fade" id="unpromote-{{ $token->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								    	
+										      <div class="modal-heade pt-3 row pr-1">
+										      	<div class="col-11">
+										      		<h6 class="text-center modal-title">Remove {{ $token->symbol }} from promotion</h6>
+										      	</div>
+										      	<div class="col-1 text-left">
+											      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+										      	</div>
+										        
+										      </div>
+										      <hr>
+										      <div class="modal-bod text-center">
+										      		
+										        	Click Proceed to confirm action
+										      </div>
+										      <hr>
+										      <div class="modal-foote text-center py-3">
+										        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Go back</button>
+										        <button type="symbol" class="btn btn-primary unpromote-btn" token-id="{{ $token->id }}">Proceed >></button>
+										      </div>
 								    </div>
 								  </div>
 								</div>
@@ -257,5 +321,78 @@
 				  </div>
 				</div>
 				@endforeach
+
+
+				<script>
+
+					$('.promote-btn').on('click', function(){
+						let $this = $(this);
+						let token_id = $this.attr('token-id');
+						let oldHtml = $this.html();
+						$this.html('<i class="fa fa-spin fa-spinner"></i>');
+
+						$.ajax({
+							url: "{{ route('promote-token') }}",
+							type: "POST",
+							data:{
+								token_id:token_id,
+								_token: universal_token
+							},
+							success:function(feedback){
+								$this.html(oldHtml)
+								$('#promote-'+token_id).modal('hide');
+								if (feedback.status = 'success') {
+									alert('Token Added to promotion list')
+
+								}else{
+									alert(feedback.msg);
+								}
+
+
+							},
+							error:function(param1, param2, param3){
+								$this.html(oldHtml)
+								$('#promote-'+token_id).modal('hide');
+								alert((param3))
+								$this.html(oldHtml)
+							}
+						})
+					})
+
+					$('.unpromote-btn').on('click', function(){
+						let $this = $(this);
+						let token_id = $this.attr('token-id');
+						let oldHtml = $this.html();
+						$this.html('<i class="fa fa-spin fa-spinner"></i>');
+
+						$.ajax({
+							url: "{{ route('unpromote-token') }}",
+							type: "POST",
+							data:{
+								token_id:token_id,
+								_token: universal_token
+							},
+							success:function(feedback){
+								$this.html(oldHtml)
+								$('#unpromote-'+token_id).modal('hide');
+								if (feedback.status = 'success') {
+									alert('Token removed from promotion list')
+									location.reload()
+
+								}else{
+									alert(feedback.msg);
+								}
+
+
+							},
+							error:function(param1, param2, param3){
+								$this.html(oldHtml)
+								$('#unpromote-'+token_id).modal('hide');
+								alert((param3))
+								$this.html(oldHtml)
+							}
+						})
+					})
+				</script>
 
 @endsection

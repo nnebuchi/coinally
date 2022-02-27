@@ -23,6 +23,14 @@ class AdminController extends Controller
         return view('admin.index')->with($data);
     }
 
+    function promotedTokens(){
+
+        $networks = $data['networks'] = Chain::all();
+        $exchanges = $data['exchanges'] = Exchange::all();
+        $tokens = $data['tokens'] = Token::with('chain')->where('promoted', 'yes')->get();
+        return view('admin.index')->with($data);
+    }
+
     function login(){
         return view('auth.admin.login');
     }
@@ -122,5 +130,21 @@ class AdminController extends Controller
     function chains(){
         $data['chains'] = Chain::all();
         return view('admin.chains')->with($data);
+    }
+
+    function promoteToken(Request $request){
+        $token_id = $this->clean->sanitize($request->token_id);
+        $token =Token::where('id', $token_id)->first();
+        $token->promoted = 'yes';
+        $token->save();
+        return json_encode(['status'=>'success', 'msg'=>'token promoted']);
+    }
+
+    function unPromoteToken(Request $request){
+        $token_id = $this->clean->sanitize($request->token_id);
+        $token =Token::where('id', $token_id)->first();
+        $token->promoted = 'no';
+        $token->save();
+        return json_encode(['status'=>'success', 'msg'=>'token removed from promotion']);
     }
 }

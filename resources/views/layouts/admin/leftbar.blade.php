@@ -22,6 +22,7 @@
 						</a>
 						<ul class="submenu">
 							<li><a href="{{route('admin')}}">All Tokens</a></li>
+							<li><a href="{{route('promoted-tokens')}}">Promoted Tokens</a></li>
 						</ul>
 					</li>
 					{{-- <li class="dropdown">

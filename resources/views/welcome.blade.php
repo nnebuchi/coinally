@@ -84,46 +84,17 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
-                                                                                <td>THOREUM <span class="text-success">$1.3550</span><br/> <span class="light-mute">Thoreum V2 (Thoreum Multi-chain Venture Capital)</span></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>GABECOIN <span class="text-success">$0.0000</span><br/> <span class="light-mute">gabecoin</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input class="star" type="checkbox" title="star" defaultChecked /><br/><br/>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>KABOSU <span class="text-success">$0.0000</span><br/> <span class="light-mute">kabosu</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>FEED <span class="text-success">$0.0000</span><br/> <span class="light-mute">Feeder.finance</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>SHIELDNET<span class="text-success">$0.0000</span><br/> <span class="light-mute">Shield Network</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-
+                                                                            @foreach($tokens as $tt)
+                                                                                @if($tt->promoted == 'yes')
+                                                                                    <tr>
+                                                                                        <td>{{ strtoupper($tt->symbol) }} <span class="text-success">${{ $tt->symbol }}</span><br/> <span class="light-mute">{{ $tt->long_name }}</span></td>
+                                                                                        <td>0.00<br/> <span class="text-success">$0.00</span>
+                                                                                        </td>
+                                                                                        <td><input class="star" type="checkbox" title="star" value="{{ $tt->symbol }}" @if(in_array(strtoupper($tt->symbol), json_decode($starred_token))) checked @endif/><br/><br/></td>
+                                                                                    </tr>
+                                                                                @endif
+                                                                            @endforeach
+                                                                            
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -238,19 +209,16 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>THOREUM <span class="text-success">$1.3550</span><br/> <span class="light-mute">Thoreum V2 (Thoreum Multi-chain Venture Capital)</span></td>
-                                                                        <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                        </td>
-                                                                        <td><input class="star" type="checkbox" title="starred" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>GABECOIN <span class="text-success">$0.0000</span><br/> <span class="light-mute">gabecoin</span>
-                                                                            <br/></td>
-                                                                        <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                        </td>
-                                                                        <td><input class="star" type="checkbox" title="starred" /></td>
-                                                                    </tr>
+                                                                    @foreach($tokens as $ss)
+                                                                        @if(in_array(strtoupper($ss->symbol), json_decode($starred_token)))
+                                                                            <tr>
+                                                                                <td>{{ strtoupper($ss->symbol) }} <span class="text-success">${{ $ss->price }}</span><br/> <span class="light-mute">{{ $ss->long_name }}</span></td>
+                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
+                                                                                </td>
+                                                                                <td><input class="star" type="checkbox" checked title="starred" /></td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -342,6 +310,7 @@
     </section>
 
     <script>
+        console.log("{{ $_COOKIE['starred_token'] }}");
         $('.network-select').on('change', function(){
             let $this = $(this);
             $.ajax({
@@ -369,6 +338,25 @@
                     alert(param3);
                 }
             })
+        })
+
+        $('.star').on('input', function(){
+           if ($(this).is(":checked")) {
+            let $this = $(this);
+            $.ajax({
+                type:"POST",
+                url:"{{ route('add-starred-token') }}",
+                data:{
+                    coin: $this.val(),
+                    _token: universal_token
+                },
+                success:function(feedback){
+                    console.log(feedback)
+                }
+                
+
+            })
+           }
         })
     </script>
 

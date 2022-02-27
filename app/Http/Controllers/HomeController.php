@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Response;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,22 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('welcome');
+    {   
+        
+        // if cookies of starred token is not set
+        if (Cookie::get('starred_token') !== null){
+            $starred_token = $request->cookie('starred_token');
+
+        }else{
+            // if cookie of starred token is already set
+            $starred_token =[];
+            $response = new Response('Set Cookie');
+            $response->withCookie(cookie('starred_token', $starred_token, $minutes));
+        }
+
+        $data['starred_token'] = $starred_token;
+        dd($starred_token);
+        return view('welcome')->with($data);
     }
 
     function query(){

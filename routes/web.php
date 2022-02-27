@@ -25,6 +25,7 @@ Route::get('/pools/{chain}/tokens/{address}', [PagesController::class, 'tokenDat
 Route::get('/latest-pair-trade', [APIController::class, 'getLatestTradesForGivenPair'])->name('latest-pair-trade');
 Route::get('/search', [APIController::class, 'search'])->name('search');
 Route::get('/get-token-price', [APIController::class, 'currentTokenPrice'])->name('get-token-price');
+Route::post('/add-starred-token', [GenericController::class, 'addStarredToken'])->name('add-starred-token');
 Route::get('test', function () {
     return view('test');
 });
@@ -40,6 +41,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('update-token', [AdminController::class, 'updateToken'])->name('update-token');
         Route::post('delete-token', [AdminController::class, 'deleteToken'])->name('delete-token');
         Route::get('chains', [AdminController::class, 'chains'])->name('admin.chains');
+        Route::post('promote-token', [AdminController::class, 'promoteToken'])->name('promote-token');
+        Route::post('unpromote-token', [AdminController::class, 'unPromoteToken'])->name('unpromote-token');
+        Route::get('promoted-tokens', [AdminController::class, 'promotedTokens'])->name('promoted-tokens');
     });
 });
 
