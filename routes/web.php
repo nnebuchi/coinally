@@ -26,6 +26,7 @@ Route::get('/latest-pair-trade', [APIController::class, 'getLatestTradesForGiven
 Route::get('/search', [APIController::class, 'search'])->name('search');
 Route::get('/get-token-price', [APIController::class, 'currentTokenPrice'])->name('get-token-price');
 Route::post('/add-starred-token', [GenericController::class, 'addStarredToken'])->name('add-starred-token');
+Route::post('/un-starred-token', [GenericController::class, 'unStarredToken'])->name('un-starred-token');
 Route::get('test', function () {
     return view('test');
 });
@@ -44,6 +45,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('promote-token', [AdminController::class, 'promoteToken'])->name('promote-token');
         Route::post('unpromote-token', [AdminController::class, 'unPromoteToken'])->name('unpromote-token');
         Route::get('promoted-tokens', [AdminController::class, 'promotedTokens'])->name('promoted-tokens');
+        Route::post('vet-token', [AdminController::class, 'vetToken'])->name('vet-token');
+        Route::post('unvet-token', [AdminController::class, 'unVetToken'])->name('unvet-token');
+        Route::get('vetted-tokens', [AdminController::class, 'vettedTokens'])->name('vetted-tokens');
+        Route::get('unvetted-tokens', [AdminController::class, 'unVettedTokens'])->name('unvetted-tokens');
     });
 });
 

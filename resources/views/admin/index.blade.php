@@ -51,7 +51,7 @@
                             <th scope="col">SYMBOL</th>
                             <th scope="col">PRICE</th>
                             <th scope="col">24 VOLUME</th>
-                            <th scope="col">LIQUIDITY</th>	
+                            <th scope="col">Vetted</th>	
                             <th scope="col">Action</th>								
                         </tr>
 							</thead>
@@ -67,7 +67,7 @@
 	                                <td> {{ $token->symbol }}</td>
 	                                <td>{{ $token->price }}</td>
 	                                <td>{{ $token->volume_24 }}</td>
-	                                <td>2,259,017</td>
+	                                <td><input type="checkbox" class="vet" value="{{ $token->id }}" @if($token->vetted == 'yes') checked @endif></td>
 									<td>
 										<a href="javascript::void(0)"  data-toggle="modal" data-target="#updateTokenModal-{{ $token->id }}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-eye"></i></a>
 
@@ -393,6 +393,45 @@
 							}
 						})
 					})
+
+
+
+			        $('.vet').on('input', function(){
+			        	let $this = $(this);
+			           if ($(this).is(":checked")) {
+			            $.ajax({
+			                type:"POST",
+			                url:"{{ route('vet-token') }}",
+			                data:{
+			                    coin: $this.val(),
+			                    _token: universal_token
+			                },
+			                success:function(feedback){
+			                	if (feedback.status == 'success') {
+			                		alert(feedback.msg)
+			                	}
+			                    console.log(feedback)
+			                }
+			                
+
+			            })
+			           }else{
+			           		$.ajax({
+				                type:"POST",
+				                url:"{{ route('unvet-token') }}",
+				                data:{
+				                    coin: $this.val(),
+				                    _token: universal_token
+				                },
+				                success:function(feedback){
+				                	if (feedback.status == 'success') {
+				                		alert(feedback.msg)
+				                	}
+				                    console.log(feedback)
+				                }
+				            })
+			           }
+			        })
 				</script>
 
 @endsection

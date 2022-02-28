@@ -16,4 +16,8 @@ class Token extends Model
     public function exchange(){
         return $this->belongsTo(Exchange::class);
     }
+
+    public function vettedTokens(){
+        return $this->hasMany(Token::class, 'vetted')->where('vetted', 'yes');
+    }
 }

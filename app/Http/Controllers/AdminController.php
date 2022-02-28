@@ -31,6 +31,22 @@ class AdminController extends Controller
         return view('admin.index')->with($data);
     }
 
+    function vettedTokens(){
+
+        $networks = $data['networks'] = Chain::all();
+        $exchanges = $data['exchanges'] = Exchange::all();
+        $tokens = $data['tokens'] = Token::with('chain')->where('vetted', 'yes')->get();
+        return view('admin.index')->with($data);
+    }
+
+    function unVettedTokens(){
+
+        $networks = $data['networks'] = Chain::all();
+        $exchanges = $data['exchanges'] = Exchange::all();
+        $tokens = $data['tokens'] = Token::with('chain')->where('vetted', 'no')->get();
+        return view('admin.index')->with($data);
+    }
+
     function login(){
         return view('auth.admin.login');
     }
@@ -146,5 +162,19 @@ class AdminController extends Controller
         $token->promoted = 'no';
         $token->save();
         return json_encode(['status'=>'success', 'msg'=>'token removed from promotion']);
+    }
+    function vetToken(Request $request){
+        $token_id = $this->clean->sanitize($request->coin);
+        $token =Token::where('id', $token_id)->first();
+        $token->vetted = 'yes';
+        $token->save();
+        return json_encode(['status'=>'success', 'msg'=>'token Vetted']);
+    }
+    function unVetToken(Request $request){
+        $token_id = $this->clean->sanitize($request->coin);
+        $token =Token::where('id', $token_id)->first();
+        $token->vetted = 'no';
+        $token->save();
+        return json_encode(['status'=>'success', 'msg'=>'token removed from Vetted list']);
     }
 }

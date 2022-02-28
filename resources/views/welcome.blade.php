@@ -85,12 +85,15 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             @foreach($tokens as $tt)
-                                                                                @if($tt->promoted == 'yes')
+                                                                                @if($tt->promoted == 'yes' && $tt->vetted=='yes')
                                                                                     <tr>
-                                                                                        <td>{{ strtoupper($tt->symbol) }} <span class="text-success">${{ $tt->symbol }}</span><br/> <span class="light-mute">{{ $tt->long_name }}</span></td>
+                                                                                        <td>{{ $tt->symbol }} <span class="text-success">${{ $tt->price }}</span><br/> <span class="light-mute">{{ $tt->long_name }}</span></td>
                                                                                         <td>0.00<br/> <span class="text-success">$0.00</span>
                                                                                         </td>
-                                                                                        <td><input class="star" type="checkbox" title="star" value="{{ $tt->symbol }}" @if(in_array(strtoupper($tt->symbol), json_decode($starred_token))) checked @endif/><br/><br/></td>
+                                                                                        <td><input class="star" id="{{ $tt->symbol.'-check' }}" type="checkbox" title="star" value="{{ $tt->symbol }}"
+                                                                                             @if(in_array($tt->symbol, $starrArr)) checked @endif />
+                                                                                            <br/><br/>
+                                                                                        </td>
                                                                                     </tr>
                                                                                 @endif
                                                                             @endforeach
@@ -117,74 +120,17 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
-                                                                                <td>PUSHIN <span class="text-success">$0.0015</span><br/> <span class="light-mute">pushin</span></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    SPORTS 
-                                                                                    <span class="text-success"> $4.5240</span><br/> <span class="light-mute">Fan Owned Sports Teams Token</span>
-                                                                                    <br/>
-                                                                                </td>
-                                                                                <td>
-                                                                                    0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input class="star" type="checkbox" title="star" defaultChecked /><br/><br/>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>
-                                                                                    INFINITY <span class="text-success">$878.2824</span><br/> <span class="light-mute">Infinity Token</span> <br/>
-                                                                                </td>
-                                                                                <td>
-                                                                                    0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input class="star" type="checkbox" title="star" defaultChecked /><br/><br/>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>WEB3 <span class="text-success">$0.0000</span><br/> <span class="light-mute">WEB3 Inu</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>LASSO<span class="text-success">$0.0029</span><br/> <span class="light-mute">Shield Network</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>RIDES<span class="text-success">$0.0000</span><br/> <span class="light-mute">BitRides</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>VIKINGS<span class="text-success">$0.0000</span><br/> <span class="light-mute">Vikings Inu</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>MZ<span class="text-success">$0.0000</span><br/> <span class="light-mute">MetaZilla</span>
-                                                                                    <br/></td>
-                                                                                <td>0.00<br/> <span class="text-success">$0.00</span>
-                                                                                </td>
-                                                                                <td><input class="star" type="checkbox" title="star" defaultChecked /><br/><br/></td>
-                                                                            </tr>
+                                                                            @foreach($tokens as $uu)
+                                                                                 @if($uu->promoted == 'yes' && $uu->vetted=='no')
+                                                                                    <tr>
+                                                                                        <td>{{ $uu->symbol }} <span class="text-success">${{ $uu->price }}</span><br/> <span class="light-mute">{{ $uu->long_name }}</span></td>
+                                                                                        <td>0.00<br/> <span class="text-success">$0.00</span>
+                                                                                        </td>
+                                                                                        <td><input class="star" type="checkbox" title="star" @if(in_array($uu->symbol, $starrArr)) checked @endif /><br/><br/></td>
+                                                                                    </tr>
+                                                                                @endif
+                                                                            @endforeach
+                                                                           
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -208,17 +154,18 @@
                                                                         <th scope="col">Star</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    @foreach($tokens as $ss)
-                                                                        @if(in_array(strtoupper($ss->symbol), json_decode($starred_token)))
-                                                                            <tr>
-                                                                                <td>{{ strtoupper($ss->symbol) }} <span class="text-success">${{ $ss->price }}</span><br/> <span class="light-mute">{{ $ss->long_name }}</span></td>
+                                                                <tbody id="starred-element">
+                                                                    @if(!is_null($user->starredTokens))
+                                                                                            
+                                                                        @foreach($user->starredTokens as $ss)
+                                                                            <tr id="starred-{{ $ss->token->symbol }}">
+                                                                                <td>{{ strtoupper($ss->token->symbol) }} <span class="text-success">${{ $ss->token->price }}</span><br/> <span class="light-mute">{{ $ss->token->long_name }}</span></td>
                                                                                 <td>0.00<br/> <span class="text-success">$0.00</span>
                                                                                 </td>
-                                                                                <td><input class="star" type="checkbox" checked title="starred" /></td>
-                                                                            </tr>
-                                                                        @endif
-                                                                    @endforeach
+                                                                                <td><input class="star" type="checkbox" checked title="starred" value="{{strtoupper($ss->token->symbol)  }}" /></td>
+                                                                            </tr> 
+                                                                        @endforeach
+                                                                    @endif
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -310,7 +257,7 @@
     </section>
 
     <script>
-        console.log("{{ $_COOKIE['starred_token'] }}");
+       
         $('.network-select').on('change', function(){
             let $this = $(this);
             $.ajax({
@@ -340,9 +287,10 @@
             })
         })
 
-        $('.star').on('input', function(){
-           if ($(this).is(":checked")) {
+        $('table').find('.star').on('input', function(){
             let $this = $(this);
+           if ($(this).is(":checked")) {
+            
             $.ajax({
                 type:"POST",
                 url:"{{ route('add-starred-token') }}",
@@ -351,11 +299,32 @@
                     _token: universal_token
                 },
                 success:function(feedback){
-                    console.log(feedback)
+                    feedback = JSON.parse(feedback)
+                    if (feedback.status == 'starred') {
+                        $('#starred-element').append(`<tr id="starred-`+feedback.token.symbol+`"><td>`+feedback.token.symbol+` <span class="text-success">`+feedback.token.price+`</span><br/> <span class="light-mute">`+feedback.token.long_name+`</span></td><td>0.00<br/> <span class="text-success">$0.00</span></td> <td><input id="`+feedback.token.symbol+`-check" class="star" type="checkbox" checked title="starred" value="`+feedback.token.symbol+`" /></td></tr>`);
+                    }
+                    
                 }
-                
-
             })
+           }else{
+
+                $.ajax({
+                    type:"POST",
+                    url:"{{ route('un-starred-token') }}",
+                    data:{
+                        coin: $this.val(),
+                        _token: universal_token
+                    },
+                    success:function(feedback){
+                        feedback = JSON.parse(feedback)
+                        if (feedback.status == 'unstarred') {
+                            console.log($('table').find("#"+feedback.symbol+"-check"))
+                            $('table').find("#"+feedback.symbol+"-check").removeAttr('checked');
+                            $('#starred-'+$this.val()).remove();
+                        }
+                        
+                    }
+                })
            }
         })
     </script>
